@@ -4,6 +4,8 @@ module Amazon
       VERSION = 2
       
       class QueryString < String #:nodoc:
+        attr_accessor :request, :access_key_id, :secret_access_key, :merchant_id, :marketplace_id
+        
         def initialize(request, access_key_id, secret_access_key, merchant_id, marketplace_id, options = {})
           super()
           @request           = request
@@ -11,26 +13,13 @@ module Amazon
           @secret_access_key = secret_access_key
           @merchant_id       = merchant_id
           @marketplace_id    = marketplace_id
-          
+
           self << build
         end
         
-        private
+        # private
         def build
-          required_params.to_query_string
-        end
-          
-        def required_params
-          { 
-            'AWSAccessKeyId'   => @access_key_id,
-            'Marketplace'      => @marketplace_id,
-            'Merchant'         => @merchant_id,
-            'Signature'        => calculate_signature,
-            'SignatureMethod'  => Signature::METHOD,
-            'SignatureVersion' => Signature::VERSION,
-            'Timestamp'        => date,
-            'Version'          => Authentication::VERSION
-          }
+          Params.new(self).to_query_string
         end
         
         def calculate_signature
@@ -40,8 +29,25 @@ module Amazon
         def date
           @request['date'].to_s.strip.empty? ? Time.now : Time.parse(@request['date'])
         end
+        
+        class Params < Hash
+          def initialize(query)
+            super()
+            replace(
+              'AWSAccessKeyId'   => query.access_key_id,
+              'Marketplace'      => query.marketplace_id,
+              'Merchant'         => query.merchant_id,
+              'Signature'        => query.calculate_signature,
+              'SignatureMethod'  => Signature::METHOD,
+              'SignatureVersion' => Signature::VERSION,
+              'Timestamp'        => query.date,
+              'Version'          => Authentication::VERSION
+            )
+          end
+        end
+        # Params
       end
-      # class QueryString
+      # QueryString
       
       class Signature < String #:nodoc:
         VERSION = '2009-01-01'
@@ -49,8 +55,11 @@ module Amazon
         
         def initialize(request, secret_access_key)
           super()
-          @request = request
-          @secret_access_key = secret_access_key          
+          @request           = request
+          @request['Host']   = Amazon::MWS::Base::DEFAULT_HOST
+          @secret_access_key = secret_access_key     
+          @uri               = URI.parse(@request.path)
+
           self << build
         end
         
@@ -75,8 +84,7 @@ module Amazon
         end
         
         def host_header
-          return "" if @request['Host'].nil?
-          @request['Host'].downcase
+          @request['Host']
         end
         
         def path
@@ -103,10 +111,8 @@ module Amazon
         #
         # d. Separate the name-value pairs with an ampersand ( & ) (ASCII code 38).
         def canonicalized_query_string
-          uri = URI.parse(@request.path)
-          query = uri.query
-          return "" if query.nil?
-          Hash.from_query_string(uri.query).sort.to_query_string
+          return if @uri.query.nil?
+          Hash.from_query_string(@uri.query).sort.to_query_string
         end
       end
       # class Signature

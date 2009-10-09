@@ -18,6 +18,13 @@ module Enumerable
   end
 end
 
+class Object
+  def returning(value)
+    yield(value)
+    value
+  end
+end
+
 module Kernel
   def __method__(depth = 0)
     caller[depth][/`([^']+)'/, 1]

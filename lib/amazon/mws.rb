@@ -14,6 +14,8 @@ require_library_or_gem 'mime/types', 'mime-types' unless defined? MIME::Types
 
 require 'mws/base'
 require 'mws/version'
+require 'mws/exceptions'
+require 'mws/connection'
 require 'mws/authentication'
 
 Amazon::MWS::Base.class_eval do
