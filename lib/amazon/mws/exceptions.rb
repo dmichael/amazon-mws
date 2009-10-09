@@ -18,5 +18,17 @@ module Amazon
       end
     end
     
+    # Raised if either the access key id or secret access key arguments are missing when establishing a connection.
+    class MissingAccessKey < InvalidOption
+      def initialize(missing_keys)
+        key_list = missing_keys.map {|key| key.to_s}.join(' and the ')
+        super("You did not provide both required access keys. Please provide the #{key_list}.")
+      end
+    end
+    
+    # Raised if a request is attempted before any connections have been established.
+    class NoConnectionEstablished < MWSException
+    end
+        
   end
 end

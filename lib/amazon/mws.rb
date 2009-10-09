@@ -16,10 +16,12 @@ require 'mws/base'
 require 'mws/version'
 require 'mws/exceptions'
 require 'mws/connection'
+require 'mws/connection/options'
+require 'mws/connection/management'
 require 'mws/authentication'
 
 Amazon::MWS::Base.class_eval do
-
+  include Amazon::MWS::Connection::Management
 end
 
 

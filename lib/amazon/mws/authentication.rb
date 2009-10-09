@@ -27,7 +27,7 @@ module Amazon
         end
         
         def date
-          @request['date'].to_s.strip.empty? ? Time.now : Time.parse(@request['date'])
+          Time.now.utc.strftime("%Y-%m-%dT%H:%M:%S%zZ")
         end
         
         class Params < Hash
@@ -53,6 +53,7 @@ module Amazon
         VERSION = '2009-01-01'
         METHOD  = 'HmacSHA1'
         
+        # Takes a request object, Net::HTTP::Post.new for instance
         def initialize(request, secret_access_key)
           super()
           @request           = request

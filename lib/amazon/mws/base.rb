@@ -1,7 +1,8 @@
 module Amazon
   module MWS
-    module Base
+    class Base
       DEFAULT_HOST = "mws.amazonaws.com"
+
     end
   end
 end
