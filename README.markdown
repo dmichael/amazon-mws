@@ -1,3 +1,8 @@
+WARNING: This is under development and not ready for production.
+===============================================================
+
+Contact me if you would like to contribute.
+
 Ruby library for Amazon Marketplace Web Service (MWS)
 =====================================================
 
