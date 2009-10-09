@@ -6,6 +6,8 @@ require 'net/https'
 require 'time'
 require 'date'
 require 'open-uri'
+require 'base64'
+
 
 $:.unshift(File.dirname(__FILE__))
 require 'mws/extensions'
@@ -18,6 +20,7 @@ require 'mws/exceptions'
 require 'mws/connection'
 require 'mws/connection/options'
 require 'mws/connection/management'
+require 'mws/connection/request_builder'
 require 'mws/authentication'
 
 Amazon::MWS::Base.class_eval do

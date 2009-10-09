@@ -10,11 +10,41 @@ class Amazon::MWS::Connection
     # Manage the creation and destruction of connections for Amazon::MWS::Base and its subclasses. Connections are
     # created with establish_connection!.
     module ClassMethods
+      # Creates a new connection with which to make requests to the S3 servers for the calling class.
+      #   
+      #   Amazon::MWS::Base.establish_connection!(
+      #     :access_key_id     => '...', 
+      #     :secret_access_key => '...',
+      #     :merchant_id       => '...',
+      #     :marketplace_id    => '...'
+      #   )
+      #
+      # == Required arguments
+      #
+      # * <tt>:access_key_id</tt> - The access key id for your S3 account. Provided by Amazon.
+      # * <tt>:secret_access_key</tt> - The secret access key for your S3 account. Provided by Amazon.
+      # * <tt>:merchant_id</tt>
+      # * <tt>:marketplace_id</tt>
+      #
+      # If any of these required arguments is missing, a MissingAccessKey exception will be raised.
+      #
+      # == Optional arguments
+      #
+      # * <tt>:server</tt> - The server to make requests to. You can use this to specify your bucket in the subdomain,
+      # or your own domain's cname if you are using virtual hosted buckets. Defaults to <tt>s3.amazonaws.com</tt>.
+      # * <tt>:port</tt> - The port to the requests should be made on. Defaults to 80 or 443 if the <tt>:use_ssl</tt>
+      # argument is set.
+      # * <tt>:use_ssl</tt> - Whether requests should be made over SSL. If set to true, the <tt>:port</tt> argument
+      # will be implicitly set to 443, unless specified otherwise. Defaults to false.
+      # * <tt>:persistent</tt> - Whether to use a persistent connection to the server. Having this on provides around a two fold 
+      # performance increase but for long running processes some firewalls may find the long lived connection suspicious and close the connection.
+      # If you run into connection errors, try setting <tt>:persistent</tt> to false. Defaults to false.
+      #
       def establish_connection!(options = {})
         # After you've already established the default connection, just specify 
         # the difference for subsequent connections
         options = default_connection.options.merge(options) if connected?
-        connections[connection_name] = Connection.connect(options)
+        connections[connection_name] = Amazon::MWS::Connection.connect(options)
       end
     
       # Returns the connection for the current class, or Base's default connection if the current class does not
