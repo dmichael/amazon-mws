@@ -3,20 +3,19 @@ class Amazon::MWS::Connection
     attr_accessor :request
 
     def initialize(verb, path, headers = {}, body = nil)
-      # need to add authorization here!
-      @request = request_method(verb).new(path + "?david=here", headers)
+      @request = request_method(verb).new(path, headers)
       @body = body
       process_body
-      puts @request.path
     end
+    
   
     def process_body
       @request.content_length = 0 and return self if @body.nil?
 
       if @body.respond_to?(:read)                                                                
-        @request.body_stream = body                                                           
+        @request.body_stream = @body                                                           
       else                                                                                      
-        @request.body = body                                                                     
+        @request.body = @body                                                                     
       end
       
       @request.content_length = @body.respond_to?(:lstat) ? @body.stat.size : @body.size
@@ -32,13 +31,18 @@ class Amazon::MWS::Connection
     # specification), so we can check if the feed we stored for processing is bit for bit identical with what you 
     # sent, protecting you from corrupted descriptive or pricing product data appearing on Amazon.com. 
     #
+    def add_host
+      @request['Host'] = Amazon::MWS::Base::DEFAULT_HOST
+      return self
+    end
+    
     def add_user_agent
-      @request['User-Agent']   ||= "Amazon::MWS/#{Amazon::MWS::Version} (Language=Ruby)"
+      @request['User-Agent'] = "Amazon::MWS/#{Amazon::MWS::Version} (Language=Ruby)"
       return self
     end
     
     def add_content_type
-      @request['Content-Type'] ||= 'binary/octet-stream'
+      @request['Content-Type'] = 'binary/octet-stream'
       return self
     end
     

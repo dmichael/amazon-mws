@@ -25,9 +25,13 @@ class Array
   def extract_options!
     last.is_a?(::Hash) ? pop : {}
   end
+  
+  def to_query_string
+    self.map { |k| "%s=%s" % [URI.encode(k[0].to_s), URI.encode(k[1].to_s)] }.join('&') unless self.empty?
+  end 
 end
 
-module Enumerable
+class Hash
   def to_query_string
     self.map { |k,v| "%s=%s" % [URI.encode(k.to_s), URI.encode(v.to_s)] }.join('&') unless self.empty?
   end

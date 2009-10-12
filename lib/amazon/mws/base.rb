@@ -1,7 +1,7 @@
 module Amazon
   module MWS
     class Base
-      DEFAULT_HOST = "mws.amazon.com"
+      DEFAULT_HOST = "mws.amazonaws.com"
       
       class << self
         # Wraps the current connection's request method and picks the appropriate response class to wrap the response in.
@@ -10,8 +10,10 @@ module Amazon
         #
         # It is unlikely that you would call this method directly. Subclasses of Base have convenience methods for each http request verb
         # that wrap calls to request.
-        def request(verb, path, options = {}, body = nil, attempts = 0, &block)
-          response = connection.request(verb, path, options, body, attempts, &block)
+        def request(verb, path, headers = {}, body = nil, attempts = 0, &block)
+          # Find the connection method in connection/management.rb which is evaled into Amazon::MWS::Base
+          response = connection.request(verb, path, headers, body, attempts, &block)
+          
         # Once in a while, a request to S3 returns an internal error. A glitch in the matrix I presume. Since these 
         # errors are few and far between the request method will rescue InternalErrors the first three times they encouter them
         # and will retry the request again. Most of the time the second attempt will work.

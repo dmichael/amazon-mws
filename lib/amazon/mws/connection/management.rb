@@ -31,10 +31,7 @@ class Amazon::MWS::Connection
       # == Optional arguments
       #
       # * <tt>:server</tt> - The server to make requests to. You can use this to specify your bucket in the subdomain,
-      # or your own domain's cname if you are using virtual hosted buckets. Defaults to <tt>s3.amazonaws.com</tt>.
-      # * <tt>:port</tt> - The port to the requests should be made on. Defaults to 80 or 443 if the <tt>:use_ssl</tt>
-      # argument is set.
-      # * <tt>:use_ssl</tt> - Whether requests should be made over SSL. If set to true, the <tt>:port</tt> argument
+      # or your own domain's cname if you are using virtual hosted buckets. Defaults to <tt>mws.amazonaws.com</tt>.
       # will be implicitly set to 443, unless specified otherwise. Defaults to false.
       # * <tt>:persistent</tt> - Whether to use a persistent connection to the server. Having this on provides around a two fold 
       # performance increase but for long running processes some firewalls may find the long lived connection suspicious and close the connection.

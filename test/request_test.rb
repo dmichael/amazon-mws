@@ -4,7 +4,6 @@ require 'yaml'
 class RequestTest < Test::Unit::TestCase
   def setup
     config = YAML.load_file( File.join(File.dirname(__FILE__), '../lib/amazon/mws.yml') )
-    puts config.inspect
     
     Amazon::MWS::Base.establish_connection!(
       config['production']
@@ -12,8 +11,8 @@ class RequestTest < Test::Unit::TestCase
   end
   
   def test_first
-    #http = Net::HTTP.new("mws.amazon.com", 80)
-    Amazon::MWS::Base.get("/")
+    response = Amazon::MWS::Base.get("/?Action=GetReportCount")
+    puts response
   end
 
 end
