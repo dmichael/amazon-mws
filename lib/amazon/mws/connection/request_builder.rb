@@ -2,28 +2,27 @@ class Amazon::MWS::Connection
   class RequestBuilder
     attr_accessor :request
 
-    def initialize(verb, path, headers = {}, body = nil)
-      @request = request_method(verb).new(path, headers)
-      @body = body
-      process_body
-    end
-    
-  
-    def process_body
-      @request.content_length = 0 and return self if @body.nil?
-
-      if @body.respond_to?(:read)                                                                
-        @request.body_stream = @body                                                           
-      else                                                                                      
-        @request.body = @body                                                                     
-      end
-      
-      @request.content_length = @body.respond_to?(:lstat) ? @body.stat.size : @body.size
-      return self
+    def initialize(verb, path, body = nil)
+      # Create the request object
+      @request = request_method(verb).new(path)
+      process_body(body)
     end
     
     def request_method(verb)
       Net::HTTP.const_get(verb.to_s.capitalize)
+    end    
+  
+    def process_body(body)
+      @request.content_length = 0 and return self if body.nil?
+
+      if body.respond_to?(:read)                                                                
+        @request.body_stream = body                                                           
+      else                                                                                      
+        @request.body = body                                                                     
+      end
+      
+      @request.content_length = body.respond_to?(:lstat) ? body.stat.size : body.size
+      return self
     end
     
     # For the SubmitFeed (p. 41) function, we require that you pass the Content-MD5 HTTP header, 
@@ -42,13 +41,27 @@ class Amazon::MWS::Connection
     end
     
     def add_content_type
-      @request['Content-Type'] = 'binary/octet-stream'
+      # nothing happening yet
       return self
     end
     
-    def add_content_md5
-      @request['Content-MD5']  = Base64.encode64(@body) unless @body.nil?
-      return self
+    def add_content_md5(body = "")
+      @request['Content-MD5'] = Base64.encode64(create_md5(body))
+      return self # chainable
     end  
+    
+    # think about chaining this with process_body
+    def create_md5(body)
+      md5 = Digest::MD5.new
+      
+      # stream from file or in memory?
+      if body.respond_to?(:read)
+        digest = body.each { |line| md5.update(line) }        
+      else
+        digest = md5.update(body)
+      end
+      
+      return digest.hexdigest
+    end
   end
 end

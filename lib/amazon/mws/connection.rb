@@ -31,15 +31,15 @@ module Amazon
       # Make the request, based on the apropriate request object
       # Called from Amazon::MWS::Base
       
-      def request(verb, path, headers = {}, body = nil, attempts = 0, &block)
+      def request(verb, path, body = nil, attempts = 0, &block)
         uri = URI.parse(path)
         # presumably this is for files
         body.rewind if body.respond_to?(:rewind) unless attempts.zero?      
         
         requester = Proc.new do |http|
-          path    = prepare_path(uri, verb, headers) if attempts.zero? # Only escape the path once
+          path    = prepare_path(uri, verb) if attempts.zero? # Only escape the path once
 
-          request = build_request(verb, path, headers, body)
+          request = build_request(verb, path, body)
           @http.request(request, &block)
         end
         # requester
@@ -58,11 +58,9 @@ module Amazon
       # Create the signed authentication query string.
       # Add this query string to the path WITHOUT prepending the server address.
       
-      def prepare_path(uri, verb, headers)
+      def prepare_path(uri, verb)
         querystring = query_string_authentication(verb, uri)
         path = "#{uri.path}?#{querystring}"
-        #path = path.remove_extended unless path.valid_utf8?
-        #URI.escape(path)
       end
       
       def query_string_authentication(verb, uri)        
@@ -76,8 +74,8 @@ module Amazon
         )
       end
       
-      def build_request(http_verb, path, headers = {}, body = nil)
-        builder = RequestBuilder.new(http_verb, path, headers, body)
+      def build_request(http_verb, path, body = nil)
+        builder = RequestBuilder.new(http_verb, path, body)
         builder.add_user_agent
         builder.add_content_type
         builder.add_content_md5(body) unless body.nil?

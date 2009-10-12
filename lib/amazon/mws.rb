@@ -2,7 +2,6 @@ require 'rubygems'
 require 'cgi'
 require 'uri'
 require 'openssl'
-require 'digest/sha1'
 require 'net/https'
 require 'time'
 require 'date'
@@ -22,7 +21,10 @@ require 'mws/connection'
 require 'mws/connection/management'
 require 'mws/connection/request_builder'
 require 'mws/authentication'
+require 'mws/authentication/query_string'
+require 'mws/authentication/signature'
 
+# This may be overkill
 Amazon::MWS::Base.class_eval do
   include Amazon::MWS::Connection::Management
 end
