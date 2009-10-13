@@ -7,8 +7,8 @@ class Amazon::MWS::Authentication
     METHOD  = 'HmacSHA256'
 
     def initialize(queryparams = {}, params = {})
-      verb   = params['verb']
-      secret = params['secret_access_key']
+      verb   = params[:verb]
+      secret = params[:secret_access_key]
       # Create the string to sign
       string = string_to_sign(verb, canonical_querystring(queryparams))
       self << sign(string, secret)
@@ -20,8 +20,6 @@ class Amazon::MWS::Authentication
       hmac.update(string)
       # chomp is important!  the base64 encoded version will have a newline at the end
       Base64.encode64(hmac.digest).chomp
-    rescue
-      ""
     end
     
     memoize :sign

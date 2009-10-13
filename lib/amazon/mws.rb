@@ -11,11 +11,11 @@ require 'base64'
 require 'builder'
 
 $:.unshift(File.dirname(__FILE__))
-require 'mws/extensions'
+require 'mws/lib/extensions'
 require_library_or_gem 'builder' unless defined? Builder
 require_library_or_gem 'mime/types', 'mime-types' unless defined? MIME::Types
 
-require 'mws/memoizable'
+require 'mws/lib/memoizable'
 require 'mws/base'
 require 'mws/version'
 require 'mws/exceptions'

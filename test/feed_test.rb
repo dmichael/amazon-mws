@@ -5,7 +5,7 @@ class FeedTest < Test::Unit::TestCase
   end
   
   def test_nothing
-    puts Feed.new.render
+    puts AWS::MWS::Feed.new.render
     # puts feed.xml
   end
 end
