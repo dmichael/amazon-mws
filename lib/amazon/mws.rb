@@ -14,6 +14,7 @@ require 'mws/extensions'
 require_library_or_gem 'builder' unless defined? Builder
 require_library_or_gem 'mime/types', 'mime-types' unless defined? MIME::Types
 
+require 'mws/memoizable'
 require 'mws/base'
 require 'mws/version'
 require 'mws/exceptions'
@@ -29,6 +30,7 @@ Amazon::MWS::Base.class_eval do
   include Amazon::MWS::Connection::Management
 end
 
+AWS = Amazon
 
 require_library_or_gem 'xmlsimple', 'xml-simple' unless defined? XmlSimple
 =begin

@@ -2,7 +2,7 @@ class Amazon::MWS::Authentication
   
   class QueryString < String
     def initialize(params = {})
-      queryparams = {
+      query_params = {
         'AWSAccessKeyId'   => params[:access_key],
         'Marketplace'      => params[:marketplace_id],
         'Merchant'         => params[:merchant_id],
@@ -13,17 +13,17 @@ class Amazon::MWS::Authentication
       }
       
       # Add any params that are passed in via uri before calculating the signature
-      query = params[:uri].query || ""
-      queryparams = queryparams.merge(Hash.from_query_string(query))
+      query_string = params[:query_string]
+      query_params = query_params.merge(Hash.from_query_string(query)) unless query_string.empty?
       
       # Calculate the signature
-      queryparams['Signature'] = Signature.new(queryparams, params)
+      query_params['Signature'] = Signature.new(query_params, params)
       
-      self << formatted_querystring(queryparams)
+      self << formatted_querystring(query_params)
     end
     
-    def formatted_querystring(queryparams)
-      queryparams.collect { |key, value| [CGI.escape(key.to_s), CGI.escape(value.to_s)].join('=') }.join('&') # order doesn't matter for the actual request
+    def formatted_querystring(query_params)
+      query_params.collect { |key, value| [CGI.escape(key.to_s), CGI.escape(value.to_s)].join('=') }.join('&') # order doesn't matter for the actual request
     end
   end
   

@@ -1,3 +1,3 @@
 require 'test/unit'
-require 'net/http'
+require 'benchmark'
 require File.join(File.dirname(__FILE__), '..', 'lib', 'amazon', 'mws')

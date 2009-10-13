@@ -19,6 +19,14 @@ class Hash
     parts = query.split(/&|=/)
     Hash[*parts]
   end
+  
+  #take keys of hash and transform those to a symbols
+  def self.keys_to_s(value)
+    return value if not value.is_a?(Hash)
+    hash = value.inject({}){|memo,(k,v)| memo[k.to_s] = Hash.keys_to_s(v); memo}
+    return hash
+  end
+  
 end
 
 class Array
