@@ -8,6 +8,7 @@ require 'date'
 require 'hmac'
 require 'hmac-sha2'
 require 'base64'
+require 'builder'
 
 $:.unshift(File.dirname(__FILE__))
 require 'mws/extensions'
@@ -24,6 +25,8 @@ require 'mws/connection/request_builder'
 require 'mws/authentication'
 require 'mws/authentication/query_string'
 require 'mws/authentication/signature'
+
+require 'mws/feed'
 
 # This may be overkill
 Amazon::MWS::Base.class_eval do
