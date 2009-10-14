@@ -9,9 +9,9 @@ module Amazon
       #
       # It is unlikely that you would call this method directly. Subclasses of Base have convenience methods for each http request verb
       # that wrap calls to request.
-      def self.request(verb, path, body = nil, attempts = 0, &block)
+      def self.request(verb, path, query_params = {}, body = nil, attempts = 0, &block)
         # Find the connection method in connection/management.rb which is evaled into Amazon::MWS::Base
-        response = connection.request(verb, path, body, attempts, &block)
+        response = connection.request(verb, path, query_params, body, attempts, &block)
   
       rescue InternalError, RequestTimeout
         if attempts == 3
@@ -25,8 +25,8 @@ module Amazon
       # Make some convenience methods
       [:get, :post, :put, :delete, :head].each do |verb|
         class_eval(<<-EVAL, __FILE__, __LINE__)
-          def self.#{verb}(path, body = nil, &block)
-            request(:#{verb}, path, body, &block)
+          def self.#{verb}(path, query_params = {}, body = nil, &block)
+            request(:#{verb}, path, query_params, body, &block)
           end
         EVAL
       end

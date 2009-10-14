@@ -13,9 +13,7 @@ class Amazon::MWS::Authentication
       }
       
       # Add any params that are passed in via uri before calculating the signature
-      query_string = params[:query_string]
-      query_params = query_params.merge(Hash.from_query_string(query)) unless query_string.empty?
-      
+      query_params = query_params.merge(params[:query_params] || {})
       # Calculate the signature
       query_params['Signature'] = Signature.new(query_params, params)
       

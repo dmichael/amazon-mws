@@ -27,11 +27,9 @@ module Amazon
         "Delete"  
       ])
   
-      def initialize
+      def initialize(params = {})
         @xml = Builder::XmlMarkup.new 
-      end
-  
-      def render(params = {})
+        
         @xml.instruct!
         @xml.AmazonEnvelope("xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance", "xsi:noNamespaceSchemaLocation"=>"amzn-envelope.xsd") do 
           render_envelope
@@ -39,7 +37,7 @@ module Amazon
           render_header
           # message      
           render_message
-        end 
+        end
       end
   
       def render_header(params = {})

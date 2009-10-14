@@ -32,11 +32,11 @@ module Amazon
       
       # Make the request, based on the apropriate request object
       # Called from Amazon::MWS::Base
-      def request(verb, path, body = nil, attempts = 0, &block)
+      def request(verb, path, query_params, body = nil, attempts = 0, &block)
         # presumably this is for files
         body.rewind if body.respond_to?(:rewind) unless attempts.zero?
         # Prepare the Proc to be called by Net::HTTP
-        proc = requester(verb, path, body)
+        proc = requester(verb, path, query_params, body)
         
         if @persistent
           @http.start unless @http.started?
@@ -50,9 +50,9 @@ module Amazon
       end
       
       # A Proc used by the request method
-      def requester(verb, path, body)
+      def requester(verb, path, query_params, body)
         Proc.new do |http|
-          path    = prepare_path(verb, path)
+          path    = prepare_path(verb, path, query_params)
           request = build_request(verb, path, body)
           @http.request(request)
         end
@@ -60,18 +60,17 @@ module Amazon
       
       # Create the signed authentication query string.
       # Add this query string to the path WITHOUT prepending the server address.
-      def prepare_path(verb, path)
-        uri          = URI.parse(path)
-        query_string = authenticate_query_string(verb, uri.query)
-        return "#{uri.path}?#{query_string}"
+      def prepare_path(verb, path, query_params)
+        query_string = authenticate_query_string(verb, query_params)
+        return "#{path}?#{query_string}"
       end
       
       # Generates the authentication query string used by Amazon.
       # Takes the http method and the query string of the request and returns the authenticated query string
-      def authenticate_query_string(verb, query_string = "")        
+      def authenticate_query_string(verb, query_params = {})        
         Authentication::QueryString.new(
           :verb              => verb,
-          :query_string      => query_string,
+          :query_params      => query_params,
           :access_key        => @access_key,
           :secret_access_key => @secret_access_key,
           :merchant_id       => @merchant_id,

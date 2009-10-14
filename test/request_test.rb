@@ -11,7 +11,7 @@ class RequestTest < Test::Unit::TestCase
   end
   
   def test_first
-    response = AWS::MWS::Base.get("/?Action=GetReportCount")
+    response = AWS::MWS::Base.get("/", {"Action"=>"GetReportCount"})
     puts response
   end
 
