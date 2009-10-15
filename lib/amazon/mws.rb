@@ -16,6 +16,9 @@ require_library_or_gem 'builder' unless defined? Builder
 require_library_or_gem 'mime/types', 'mime-types' unless defined? MIME::Types
 
 require 'mws/lib/memoizable'
+require 'mws/api'
+require 'mws/api/feeds'
+require 'mws/api/reports'
 require 'mws/base'
 require 'mws/version'
 require 'mws/exceptions'
@@ -26,11 +29,16 @@ require 'mws/authentication'
 require 'mws/authentication/query_string'
 require 'mws/authentication/signature'
 
-require 'mws/feed'
+require 'mws/feed_builder'
 
 # This may be overkill
 Amazon::MWS::Base.class_eval do
   include Amazon::MWS::Connection::Management
+end
+
+Amazon::MWS::API.class_eval do
+  extend Amazon::MWS::API::Feeds
+  extend Amazon::MWS::API::Reports
 end
 
 AWS = Amazon
