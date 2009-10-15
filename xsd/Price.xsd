@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!-- Revision="$Revision: #3 $" -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!--
+    $Date: 2006/11/17 $
+
+    AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
+    confidential and proprietary information of Amazon.com and may not be reproduced, 
+    distributed or used, in whole or in part, for any purpose other than as necessary 
+    to list products for sale on the www.amazon.com web site pursuant to an agreement 
+    with Amazon.com.
+    -->
+	<xsd:include schemaLocation="amzn-base.xsd"/>
+	<xsd:element name="Price">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="SKU"/>
+				<xsd:element name="StandardPrice" type="OverrideCurrencyAmount"/>
+				<xsd:element name="MAP" type="OverrideCurrencyAmount" minOccurs="0"/>
+                <xsd:element name="DepositAmount" type="CurrencyAmountWithDefault" minOccurs="0"/>
+				<xsd:element name="Sale" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="StartDate" type="xsd:dateTime"/>
+							<xsd:element name="EndDate" type="xsd:dateTime"/>
+							<xsd:element name="SalePrice" type="OverrideCurrencyAmount"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="Previous" type="DatedPrice" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:simpleType	name="BaseCurrencyCodeWithDefault">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="USD"/>
+			<xsd:enumeration value="GBP"/>
+			<xsd:enumeration value="EUR"/>
+			<xsd:enumeration value="JPY"/>
+			<xsd:enumeration value="CAD"/>
+			<xsd:enumeration value="DEFAULT"/>
+		</xsd:restriction>
+	</xsd:simpleType>	 
+	<xsd:complexType name="CurrencyAmountWithDefault">
+		<xsd:simpleContent>
+			<xsd:extension base="BaseCurrencyAmount">
+				<xsd:attribute name="currency" type="BaseCurrencyCodeWithDefault" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="OverrideCurrencyAmount">
+		<xsd:simpleContent>
+            <xsd:extension base="CurrencyAmountWithDefault">
+				<xsd:attribute name="zero" type="xsd:boolean" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+</xsd:schema>
+

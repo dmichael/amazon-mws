@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!-- Revision="$Revision: #2 $" -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <!--
+    $Date: 2005/04/01 $
+
+    AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
+    confidential and proprietary information of Amazon.com and may not be reproduced, 
+    distributed or used, in whole or in part, for any purpose other than as necessary 
+    to list products for sale on the www.amazon.com web site pursuant to an agreement 
+    with Amazon.com.
+    -->
+
+    <xsd:include schemaLocation="amzn-base.xsd"/>
+
+    <xsd:element name="ProcessingReport">
+        <xsd:complexType>
+            <xsd:sequence>
+
+                <xsd:element name="DocumentTransactionID" type="IDNumber"/>
+
+                <xsd:element name="StatusCode">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="Complete"/>
+                            <xsd:enumeration value="Processing"/>
+                            <xsd:enumeration value="Rejected"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+
+                <xsd:element name="ProcessingSummary" minOccurs="0">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="MessagesProcessed" type="xsd:nonNegativeInteger"/>
+                            <xsd:element name="MessagesSuccessful" type="xsd:nonNegativeInteger"/>
+                            <xsd:element name="MessagesWithError" type="xsd:nonNegativeInteger"/>
+                            <xsd:element name="MessagesWithWarning" type="xsd:nonNegativeInteger"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+
+                <xsd:element name="Result" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:sequence>
+
+                            <xsd:element name="MessageID">
+                                 <xsd:simpleType>
+                                     <xsd:restriction base="xsd:nonNegativeInteger">
+                                         <xsd:pattern value="\d{1,20}"/>
+                                     </xsd:restriction>
+                                 </xsd:simpleType>
+                             </xsd:element>
+
+                            <xsd:element name="ResultCode">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:enumeration value="Error"/>
+                                        <xsd:enumeration value="Warning"/>
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+
+                            <xsd:element name="ResultMessageCode" type="IDNumber"/>
+                            <xsd:element name="ResultDescription" type="xsd:string"/>
+
+                            <xsd:element name="AdditionalInfo" minOccurs="0">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element ref="SKU" minOccurs="0"/>
+                                        <xsd:element ref="FulfillmentCenterID" minOccurs="0"/>
+                                        <xsd:element ref="AmazonOrderID" minOccurs="0"/>
+                                        <xsd:element ref="AmazonOrderItemCode" minOccurs="0"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Revision="$Revision: #6 $" -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!-- Include the data type primitives -->
+	<xsd:include schemaLocation="TypeDefinitions.xsd"/>
+	<xsd:include schemaLocation="ProductAttributes.xsd"/>
+	<xsd:include schemaLocation="AttributeGroups.xsd"/>
+	<!-- Start of the item schema -->
+	<xsd:element name="Item">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="sku">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="value" type="ItemFortyStringNotNull"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="product_type_name" type="StringValue" minOccurs="0"/>
+				<xsd:element name="MarketplaceData" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:all>
+							<xsd:element name="contribution_margin" type="PriceUnitValue" minOccurs="0"/>
+							<xsd:element name="discontinue_date" type="DateValue" minOccurs="0"/>
+							<xsd:element name="free_shipping" type="BooleanValue" minOccurs="0"/>
+							<xsd:element name="launch_date" type="DateValue" minOccurs="0"/>
+							<xsd:element name="max_ordering_quantity" type="IntegerValue" minOccurs="0"/>
+							<xsd:element name="msrp" type="PriceUnitValue" minOccurs="0"/>
+							<xsd:element name="offering_can_ship_in_original_container" type="BooleanValue" minOccurs="0"/>
+							<xsd:element name="release_date" type="DateValue" minOccurs="0"/>
+						</xsd:all>
+						<xsd:attribute name="market_name" type="ItemStringNotNull" use="required"/>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="DescriptionData" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="brand_name" type="StringValue" minOccurs="0"/>
+							<xsd:element name="bullet_point" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemLongStringNotNull" minOccurs="0" maxOccurs="30"/>
+									</xsd:sequence>
+									<xsd:attribute name="language" type="LanguageType" use="optional"/>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="can_be_giftmessaged" type="BooleanValue" minOccurs="0"/>
+							<xsd:element name="can_be_giftwrapped" type="BooleanValue" minOccurs="0"/>
+							<xsd:element name="ean" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="StandardIdString" maxOccurs="unbounded"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="ean8" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" maxOccurs="unbounded">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:normalizedString">
+													<xsd:minLength value="8"/>
+													<xsd:maxLength value="8"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="gtin" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" maxOccurs="unbounded">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:normalizedString">
+													<xsd:minLength value="14"/>
+													<xsd:maxLength value="14"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="isbn" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:normalizedString">
+													<xsd:minLength value="10"/>
+													<xsd:maxLength value="13"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="ItemDimensions" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="item_height" type="DimensionValue"/>
+										<xsd:element name="item_length" type="DimensionValue"/>
+										<xsd:element name="item_width" type="DimensionValue"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="item_name" minOccurs="0" maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemLongStringNotNull" minOccurs="0"/>
+									</xsd:sequence>
+									<xsd:attribute name="language" type="LanguageType" use="optional"/>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="item_weight" type="WeightValue" minOccurs="0"/>
+							<xsd:element name="manufacturer" type="LongStringValue" minOccurs="0"/>
+							<xsd:element name="offering_condition" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" minOccurs="0">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:normalizedString">
+													<xsd:enumeration value="New"/>
+													<xsd:enumeration value="Used"/>
+													<xsd:enumeration value="Collectible"/>
+													<xsd:enumeration value="Refurbished"/>
+													<xsd:enumeration value="Club"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="offering_subcondition" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" minOccurs="0">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:normalizedString">
+													<xsd:enumeration value="New"/>
+													<xsd:enumeration value="LikeNew"/>
+													<xsd:enumeration value="VeryGood"/>
+													<xsd:enumeration value="Good"/>
+													<xsd:enumeration value="Acceptable"/>
+													<xsd:enumeration value="Refurbished"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="package_weight" type="WeightValue" minOccurs="0"/>
+							<xsd:element name="part_number" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemFortyStringNotNull" minOccurs="0"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="product_description" minOccurs="0" maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" minOccurs="0">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:normalizedString">
+													<xsd:minLength value="1"/>
+													<xsd:maxLength value="2000"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="language" type="LanguageType" use="optional"/>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="product_tax_code" type="StringValue" minOccurs="0"/>
+							<xsd:element name="upc" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="StandardIdString" maxOccurs="unbounded"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="SearchAndBrowseData" minOccurs="0">
+					<xsd:complexType>
+						<xsd:all>
+							<xsd:element name="browse_suppressed" type="BooleanValue" minOccurs="0"/>
+							<xsd:element name="catalog_number" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemFortyStringNotNull" minOccurs="0"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="generic_keywords" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemStringNotNull" minOccurs="0" maxOccurs="5"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="item_type_keyword" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemLongStringNotNull" minOccurs="0"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="platinum_keywords" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemStringNotNull" minOccurs="0" maxOccurs="20"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="recommendation_suppressed" type="BooleanValue" minOccurs="0"/>
+							<xsd:element name="specific_uses_keywords" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemStringNotNull" minOccurs="0" maxOccurs="5"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="target_audience_keywords" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemStringNotNull" minOccurs="0" maxOccurs="3"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="thesaurus_attribute_keywords" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemStringNotNull" minOccurs="0" maxOccurs="5"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="thesaurus_subject_keywords" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="ItemStringNotNull" minOccurs="0" maxOccurs="5"/>
+									</xsd:sequence>
+									<xsd:attribute name="delete" type="BooleanType" use="optional"/>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:all>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="AdditionalData" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:any processContents="lax" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<!-- SKU and Product Type -->
+				<!-- Marketplace specific data -->
+				<!-- Core data about the item that is the same for all product types -->
+				<!-- Attributes used for indexing the data for search & browse -->
+				<!-- This group holds all of the product type specific attributes -->
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
+

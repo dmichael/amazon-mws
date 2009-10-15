@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<!-- Revision="$Revision: #9 $" -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!--
+    $Date: 2007/07/18 $
+
+    AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
+    confidential and proprietary information of Amazon.com and may not be reproduced, 
+    distributed or used, in whole or in part, for any purpose other than as necessary 
+    to list products for sale on the www.amazon.com web site pursuant to an agreement 
+    with Amazon.com.
+    -->
+	<xsd:include schemaLocation="amzn-base.xsd"/>
+	<xsd:element name="Clothing">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="VariationData" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Parentage" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="parent"/>
+										<xsd:enumeration value="child"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Size" type="String" default="*" minOccurs="0"/>
+							<xsd:element name="Color" type="String" default="*" minOccurs="0"/>
+							<xsd:element name="VariationTheme" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="Size"/>
+										<xsd:enumeration value="Color"/>
+										<xsd:enumeration value="SizeColor"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="ClassificationData">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="ClothingType">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="Shirt"/>
+										<xsd:enumeration value="Sweater"/>
+										<xsd:enumeration value="Pants"/>
+										<xsd:enumeration value="Shorts"/>
+										<xsd:enumeration value="Skirt"/>
+										<xsd:enumeration value="Dress"/>
+										<xsd:enumeration value="Suit"/>
+										<xsd:enumeration value="Blazer"/>
+										<xsd:enumeration value="Outerwear"/>
+										<xsd:enumeration value="SocksHosiery"/>
+										<xsd:enumeration value="Underwear"/>
+										<xsd:enumeration value="Bra"/>
+										<xsd:enumeration value="Shoes"/>
+										<xsd:enumeration value="Hat"/>
+										<xsd:enumeration value="Bag"/>
+										<xsd:enumeration value="Accessory"/>
+										<xsd:enumeration value="Jewelry"/>
+										<xsd:enumeration value="Sleepwear"/>
+										<xsd:enumeration value="Swimwear"/>
+										<xsd:enumeration value="PersonalBodyCare"/>
+										<xsd:enumeration value="HomeAccessory"/>
+										<xsd:enumeration value="NonApparelMisc"/>
+										<xsd:enumeration value="Kimono"/>
+										<xsd:enumeration value="Obi"/>
+										<xsd:enumeration value="Chanchanko"/>
+										<xsd:enumeration value="Jinbei"/>
+										<xsd:enumeration value="Yukata"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Department" type="StringNotNull" maxOccurs="10"/>
+							<xsd:element name="StyleKeywords" type="LongStringNotNull" maxOccurs="10"/>
+							<xsd:element name="PlatinumKeywords" type="String" minOccurs="0" maxOccurs="20"/>
+							<xsd:element name="ColorMap" type="String" minOccurs="0"/>
+							<xsd:element name="SpecialSizeType" type="String" minOccurs="0" maxOccurs="10"/>
+							<xsd:element name="MaterialAndFabric" type="LongString" minOccurs="0" maxOccurs="4"/>
+							<xsd:element name="MaterialComposition" type="SuperLongStringNotNull" minOccurs="0"/>
+							<xsd:element name="MaterialOpacity" type="HundredString" minOccurs="0"/>
+							<xsd:element name="InnerMaterial" type="LongString" minOccurs="0"/>
+							<xsd:element name="OuterMaterial" type="LongString" minOccurs="0"/>
+							<xsd:element name="SoleMaterial" type="LongString" minOccurs="0"/>
+							<xsd:element name="ShoeClosureType" type="String" minOccurs="0"/>
+							<xsd:element name="ApparelClosureType" type="LongString" minOccurs="0"/>
+							<xsd:element name="CareInstructions" type="SuperLongStringNotNull" minOccurs="0"/>
+							<xsd:element name="OccasionAndLifestyle" type="LongString" minOccurs="0" maxOccurs="10"/>
+							<xsd:element name="EventKeywords" type="LongString" minOccurs="0" maxOccurs="10"/>
+							<xsd:element name="Season" type="HundredString" minOccurs="0"/>
+							<xsd:element name="SpecificUses" type="HundredString" minOccurs="0" maxOccurs="3"/>
+							<xsd:element name="ExternalTestingCertification" type="HundredString" minOccurs="0" maxOccurs="5"/>
+							<xsd:element name="PerformanceRating" minOccurs="0" maxOccurs="3">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="Sunproof"/>
+										<xsd:enumeration value="Waterproof"/>
+										<xsd:enumeration value="Weatherproof"/>
+										<xsd:enumeration value="Windproof"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="ProductSpecification" type="String" minOccurs="0"/>
+							<xsd:element name="Warnings" type="LongStringNotNull" minOccurs="0"/>
+							<xsd:element name="IsCustomizable" type="xsd:boolean" minOccurs="0"/>
+							<xsd:element name="StyleName" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="CollarType" type="String" minOccurs="0"/>
+							<xsd:element name="SleeveType" type="String" minOccurs="0"/>
+							<xsd:element name="WaistStyle" type="TwentyStringNotNull" minOccurs="0"/>
+							<xsd:element name="MinimumHeightRecommended" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="MaximumHeightRecommended" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="CountryOfOrigin" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:length value="2" fixed="true"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="ModelName" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="ModelNumber" type="FortyStringNotNull" minOccurs="0"/>
+							<xsd:element name="ModelYear" type="FourDigitYear" minOccurs="0"/>
+							<xsd:element name="IsAdultProduct" type="xsd:boolean" minOccurs="0"/>
+							<xsd:element name="SizeMap" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="WaistSize" type="ClothingSizeDimension" minOccurs="0"/>
+							<xsd:element name="InseamLength" type="ClothingSizeDimension" minOccurs="0"/>
+							<xsd:element name="SleeveLength" type="ClothingSizeDimension" minOccurs="0"/>
+							<xsd:element name="NeckSize" type="ClothingSizeDimension" minOccurs="0"/>
+							<xsd:element name="ChestSize" type="ClothingSizeDimension" minOccurs="0"/>
+							<xsd:element name="CupSize" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="A"/>
+										<xsd:enumeration value="AA"/>
+										<xsd:enumeration value="B"/>
+										<xsd:enumeration value="C"/>
+										<xsd:enumeration value="D"/>
+										<xsd:enumeration value="DD"/>
+										<xsd:enumeration value="DDD"/>
+										<xsd:enumeration value="E"/>
+										<xsd:enumeration value="EE"/>
+										<xsd:enumeration value="F"/>
+										<xsd:enumeration value="FF"/>
+										<xsd:enumeration value="G"/>
+										<xsd:enumeration value="GG"/>
+										<xsd:enumeration value="H"/>
+										<xsd:enumeration value="I"/>
+										<xsd:enumeration value="J"/>
+										<xsd:enumeration value="Free"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="BraBandSize" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="ShoeWidth" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="AAAA"/>
+										<xsd:enumeration value="AAA"/>
+										<xsd:enumeration value="AA"/>
+										<xsd:enumeration value="A"/>
+										<xsd:enumeration value="B"/>
+										<xsd:enumeration value="C"/>
+										<xsd:enumeration value="D"/>
+										<xsd:enumeration value="E"/>
+										<xsd:enumeration value="E"/>
+										<xsd:enumeration value="EE"/>
+										<xsd:enumeration value="EEE"/>
+										<xsd:enumeration value="EEEE"/>
+										<xsd:enumeration value="EEEEE"/>
+										<xsd:enumeration value="F"/>
+										<xsd:enumeration value="G"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="HeelHeight" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="HeelType" type="String" minOccurs="0"/>
+							<xsd:element name="ShaftHeight" type="StringLengthOptionalDimension" minOccurs="0"/>
+							<xsd:element name="ShaftDiameter" type="String" minOccurs="0"/>
+							<xsd:element name="BeltLength" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="BeltWidth" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="FurisodeLength" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="FurisodeWidth" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="ObiLength" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="ObiWidth" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="TsukeobiWidth" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="TsukeobiHeight" type="LengthDimension" minOccurs="0"/>
+							<xsd:element name="PillowSize" type="StringLengthOptionalDimension" minOccurs="0"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

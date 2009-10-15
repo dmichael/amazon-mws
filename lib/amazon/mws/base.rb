@@ -16,10 +16,15 @@ module Amazon
         # Find the connection method in connection/management.rb which is evaled into Amazon::MWS::Base
         response = connection.request(verb, path, query_params, body, attempts, &block)
         body     = response.body
-
-        parsed_response = parse_response(body)
         
-        return parsed_response
+        formatted_response = 
+        if response.content_type =~ /xml/
+          parse_xml_response(body) 
+        else
+          body
+        end
+        
+        return formatted_response
       rescue InternalError, RequestTimeout
         if attempts == 3
           raise
@@ -29,10 +34,12 @@ module Amazon
         end
       end
       
-      def self.parse_response(response)
+      def self.parse_xml_response(response)
         xml = REXML::Document.new(response)
-        # hash literal:
-        { xml.root.name => parse_xml(xml.root) }
+        
+        # Note: we are dropping the root node which is ALWAYS "#{action}Response"
+        # We should think about dropping the next node which is always "#{action}Result"
+        parse_xml(xml.root)
       end
       
       def self.parse_xml(xml, hash = {})

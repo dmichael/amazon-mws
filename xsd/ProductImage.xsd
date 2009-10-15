@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- Revision="$Revision: #5 $" -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!--
+    $Date: 2007/09/04 $
+
+    AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
+    confidential and proprietary information of Amazon.com and may not be reproduced, 
+    distributed or used, in whole or in part, for any purpose other than as necessary 
+    to list products for sale on the www.amazon.com web site pursuant to an agreement 
+    with Amazon.com.
+    -->
+	<xsd:include schemaLocation="amzn-base.xsd"/>
+	<xsd:element name="ProductImage">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="SKU"/>
+				<xsd:element name="ImageType">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="Main"/>
+							<xsd:enumeration value="Swatch"/>
+							<xsd:enumeration value="PT1"/>
+							<xsd:enumeration value="PT2"/>
+							<xsd:enumeration value="PT3"/>
+							<xsd:enumeration value="PT4"/>
+							<xsd:enumeration value="PT5"/>
+							<xsd:enumeration value="PT6"/>
+							<xsd:enumeration value="PT7"/>
+							<xsd:enumeration value="PT8"/>
+							<xsd:enumeration value="Search"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="ImageLocation" type="xsd:anyURI" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
