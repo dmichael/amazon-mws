@@ -2,7 +2,7 @@ Ruby library for Amazon Marketplace Web Service (MWS)
 =====================================================
 
 Amazon::MWS is a set of classes for using the Amazon Marketplace Web Service, a link to Amazon's Seller Central.
-This library is in active development, but should now work for the most part.
+This library is in active development, but should now work for the most part. If you would like to contribute to this project, please contact me.
 
 These classes are modeled after aspects of AWS::S3, check it out: http://amazon.rubyforge.org/
 
@@ -18,3 +18,8 @@ To illustrate, indulge me in an example. All requests for action on Amazon's par
 I understand that Amazon is looking to transition off it's incredibly complex SOAP API, and while MWS is an improvement, its still confusing and a little painful. I very much look forward to Amazon's continued refinement of their MWS API.
 
 Enjoy!
+
+Usage
+===========
+
+Stay tuned, we are working on it!
