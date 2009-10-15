@@ -1,3 +1,6 @@
+
+#include REXML  # so that we don't have to prefix everything with REXML::..
+
 module Amazon
   module MWS
     class Base
@@ -12,7 +15,11 @@ module Amazon
       def self.request(verb, path, query_params = {}, body = nil, attempts = 0, &block)
         # Find the connection method in connection/management.rb which is evaled into Amazon::MWS::Base
         response = connection.request(verb, path, query_params, body, attempts, &block)
-  
+        body     = response.body
+
+        parsed_response = parse_response(body)
+        
+        return parsed_response
       rescue InternalError, RequestTimeout
         if attempts == 3
           raise
@@ -20,6 +27,24 @@ module Amazon
           attempts += 1
           retry
         end
+      end
+      
+      def self.parse_response(response)
+        xml = REXML::Document.new(response)
+        # hash literal:
+        { xml.root.name => parse_xml(xml.root) }
+      end
+      
+      def self.parse_xml(xml, hash = {})
+        if xml.elements.size.zero?
+          return xml.text
+        else
+          xml.each_element { |element|
+            hash[element.name] = parse_xml(element)
+          }
+        end
+        
+        return hash
       end
 
       # Make some convenience methods

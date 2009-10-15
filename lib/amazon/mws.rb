@@ -9,6 +9,7 @@ require 'hmac'
 require 'hmac-sha2'
 require 'base64'
 require 'builder'
+require "rexml/document"
 
 $:.unshift(File.dirname(__FILE__))
 require 'mws/lib/extensions'

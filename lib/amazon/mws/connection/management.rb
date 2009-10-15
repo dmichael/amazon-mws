@@ -52,7 +52,7 @@ class Amazon::MWS::Connection
         if connected?
           connections[connection_name] || default_connection
         else
-          raise NoConnectionEstablished
+          raise Amazon::MWS::NoConnectionEstablished.new
         end
       end
     
