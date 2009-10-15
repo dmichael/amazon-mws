@@ -11,7 +11,7 @@ class FeedSubmissionTest < Test::Unit::TestCase
   end
   
   def test_get_feed_submission_list
-    # AWS::MWS::API.submit_feed(:product_data, :product, @product)
-    # response = AWS::MWS::API.get_feed_submission_list
+    # Amazon::MWS::API.submit_feed(:product_data, :product, @product)
+    # response = Amazon::MWS::API.get_feed_submission_list
   end
 end

@@ -2,7 +2,7 @@ class Amazon::MWS::API
   module Feeds
     # Note: really?? -> POST /?FeedType=_POST_PRODUCT_DATA_&Data=<product_data>
     # Note: We do not handle flat file feed types
-    FEED_TYPES = {
+    SUBMIT_FEED_TYPES = {
       :product_data              => '_POST_PRODUCT_DATA_',
       :product_relationship_data => '_POST_PRODUCT_RELATIONSHIP_DATA_',
       :item_data                 => '_POST_ITEM_DATA_',
@@ -20,7 +20,7 @@ class Amazon::MWS::API
       # :flat_file_invloader             => '_POST_FLAT_FILE_INVLOADER_DATA_'
     }
 
-    MESSAGE_TYPES = [
+    SUBMIT_FEED_MESSAGE_TYPES = [
       "FulfillmentCenter",
       "Inventory",
       "OrderAcknowledgment",
@@ -47,12 +47,12 @@ class Amazon::MWS::API
     # feed.
     def submit_feed(feed_type, message_type, message = {})
       message_type= message_type.to_s.camelize
-      raise InvalidMessageType if !MESSAGE_TYPES.include?(message_type)
+      raise InvalidMessageType if !SUBMIT_FEED_MESSAGE_TYPES.include?(message_type)
   
       body     = Amazon::MWS::FeedBuilder.new(message_type, message)
       response = Amazon::MWS::Base.post("/", {
         "Action"   => "SubmitFeed", 
-        "FeedType" => FEED_TYPES[feed_type]
+        "FeedType" => SUBMIT_FEED_TYPES[feed_type]
       }, body)
     end
 
