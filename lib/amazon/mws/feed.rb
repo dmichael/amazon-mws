@@ -178,6 +178,7 @@ module Amazon
       # The latest submission date you are looking for, in ISO8601 date
       # format (for example, "2008-07-03T18:12:22Z" or
       # "2008-07-03T18:12:22.093-07:00").
+
       def cancel_feed_submissions(params = {})
         response = 
         Amazon::MWS::Base.post("/", {"Action" => "CancelFeedSubmissions"}.merge(params))

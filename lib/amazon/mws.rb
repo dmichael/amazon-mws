@@ -37,11 +37,13 @@ require 'mws/lib/memoizable'
 require 'mws/feed_builder'
 require 'mws/feed_enumerations'
 require 'mws/feed'
+require 'mws/report_enumerations'
 require 'mws/report'
 
 
 require 'mws/response'
 require 'mws/feed_submission'
+require 'mws/report_request'
 Dir.glob(File.join(File.dirname(__FILE__), 'mws/response/*.rb')).each {|f| require f }
 
 require 'mws/base'

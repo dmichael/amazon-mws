@@ -79,24 +79,96 @@ module Amazon
       # RequestedToDate - The most recent date you are looking for.
     
       def get_report_request_list(params = {})
-        # There is no error checking of values currently!
-        response = Amazon::MWS::Base.get("/", {"Action" => "GetReportRequestList"}.merge(params))
-        puts response.body
-        puts
+        response = 
+        Amazon::MWS::Base.get("/", {"Action" => "GetReportRequestList"}.merge(params))
         
-        result = ReportResponse::GetReportRequestListResult.parse(response.body)
-        puts result.has_next
-        puts result.next_token
+        GetReportRequestListResponse.format(response)
       end
       # add a nice method
       alias_method :request_list, :get_report_request_list
     
+      # GetReportRequestListByNextToken
+      # Description
+      # 
+      # The GetReportRequestListByNextToken operation returns a list of report
+      # requests that match the query parameters, using the NextToken, which
+      # was supplied by a previous call to either
+      # GetReportRequestListByNextToken or a call to GetReportRequestList,
+      # where the value of HasNext was true in that previous call.
+      
+      # NextToken
+      # Token returned in a previous call to either GetReportRequestList or
+      # GetReportRequestListByNextToken when the value of HasNext was true.
+      
+      def get_report_request_list_by_next_token(next_token)
+        response = 
+         Amazon::MWS::Base.post("/", {
+           "Action"   => "GetReportListByNextToken", 
+           "NextToken" => next_token
+         })
+
+         GetReportRequestListByNextTokenResponse.format(response)
+      end
+
+      alias_method :request_list_by_next_token, :get_report_request_list_by_next_token      
+    
+      # GetReportRequestCount
+      # The GetReportRequestCount returns a count of report requests.
+    
       def get_report_request_count(params = {})
         response = Amazon::MWS::Base.get("/", {"Action" => "GetReportRequestCount"})
-        #ReportRequestListResponse.format(response)
+        
+        GetReportRequestCountResponse.format(response)
       end
       # add a nice method
       alias_method :request_count, :get_report_request_count
+    
+      # CancelReportRequests
+      # The CancelReportRequests operation cancels one or more report
+      # requests, returning the count of the canceled report requests and the
+      # report request information. You can specify a number to cancel of
+      # greater than one hundred, but information will only be returned about
+      # the first one hundred report requests in the list. To return metadata
+      # about a greater number of canceled report requests, you can call
+      # GetReportRequestList. If report requests have already begun
+      # processing, they cannot be canceled.
+      
+      #  
+      # ReportRequestIdList
+      # A structured list of report request IDs. If you pass in explicit IDs in this call, the other conditions, if specified, will be ignored.
+      # 
+      # ReportTypeList
+      # A structured ReportType list by which to filter reports.
+      # 
+      # ReportProcessingStatusList
+      # A structured list of report processing statuses by which to filter report requests.
+      # 
+      # ReportProcessingStatus
+      # _SUBMITTED_
+      # _IN_PROGRESS_
+      # _CANCELLED_
+      # _DONE_
+      # _DONE_NO_DATA_
+      # 
+      # RequestedFromDate
+      # The earliest date you are looking for, in ISO8601 date format (for example, "2008-07-03T18:12:22Z" or "2008-07-03T18:12:22.093-07:00").
+      # 
+      # RequestedToDate
+      # The most recent date you are looking for.
+      
+      def cancel_report_requests(params = {})
+        response = 
+        Amazon::MWS::Base.post("/", {"Action" => "CancelReportRequests"}.merge(params))
+
+        CancelReportRequestsResponse.format(response)
+      end
+
+      alias_method :cancel_requests, :cancel_report_requests
+      
+      
+      
+      
+      
          
       def get_report(report_id, params = {})
         response = Amazon::MWS::Base.get("/", {"Action" => "GetReport", "ReportId" => report_id})

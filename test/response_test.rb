@@ -71,9 +71,19 @@ class ResponseTest < Test::Unit::TestCase
     assert_equal(0, response.message.result.sku)
   end
     
+  def test_request_report
+    response = RequestReportResponse.format(xml_for('request_report'))
     
-  def test_report_request_list_response
-    response = ReportRequestListResponse.format(xml_for('get_report_request_list'))
+    assert_equal("88faca76-b600-46d2-b53c-0c8c4533e43a", response.request_id)
+    
+    assert(response.report_request)
+    assert_equal(response.report_request.report_type, "_GET_MERCHANT_LISTINGS_DATA_")
+    assert_equal(response.report_request.scheduled?, false)
+    assert_equal(response.report_request.report_processing_status, "_SUBMITTED_")
+  end
+  
+  def test_get_report_request_list
+    response = GetReportRequestListResponse.format(xml_for('get_report_request_list'))
     
     assert_equal(response.request_id, "1e1d7b22-004e-4333-a881-1f20b671097f")
     assert(response.has_next?)
@@ -81,9 +91,31 @@ class ResponseTest < Test::Unit::TestCase
     assert_equal(response.report_requests.size, 10)
   end
   
-  def test_report_request_list_response
+  def test_get_report_request_list_by_next_token
+    response = GetReportRequestListByNextTokenResponse.format(xml_for('get_report_request_list_by_next_token'))
     
+    assert_equal("732480cb-84a8-4c15-9084-a46bd9a0889b", response.request_id)
+    assert_equal('none', response.next_token)
+    assert_equal(false, response.has_next?) # same as false ???
+
+    assert_equal(1, response.report_requests.size)
+    assert_equal(2291326454, response.report_requests.first.id)
+    assert_equal('732480cb-84a8-4c15-9084-a46bd9a0889b', response.request_id)
   end
 
+  def test_get_report_request_count
+    response = GetReportRequestCountResponse.format(xml_for('get_report_request_count'))
+  
+    assert_equal(1276, response.count)
+    assert_equal('7e155027-3741-4422-95a7-1de12703c13e', response.request_id)
+  end
+  
+  def test_cancel_report_requests
+    response = CancelReportRequestsResponse.format(xml_for('cancel_report_requests'))
+  
+    assert_equal(10, response.count)
+    assert_equal(1, response.report_requests.size)
+    assert_equal('a720f9d6-83e9-4684-bc35-065b41ed5ca4', response.request_id)
+  end
 end
 
