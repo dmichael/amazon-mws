@@ -12,6 +12,9 @@ class String
     end
   end
   
+  def to_boolean
+    (self == "true") ? true : false
+  end
   # By default, +camelize+ converts strings to UpperCamelCase. If the argument to +camelize+
   # is set to <tt>:lower</tt> then +camelize+ produces lowerCamelCase.
   #
@@ -30,6 +33,13 @@ class String
     end
   end
   
+  def underscore
+    self.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+    gsub(/([a-z\d])([A-Z])/,'\1_\2').
+    tr("-", "_").
+    downcase
+  end
 end
 
 class Hash

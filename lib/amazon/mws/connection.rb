@@ -53,7 +53,9 @@ module Amazon
       def requester(verb, path, query_params, body)
         Proc.new do |http|
           path    = prepare_path(verb, path, query_params)
+          puts "#{path}\n\n" if AWS::MWS::Base.debug
           request = build_request(verb, path, body)
+          
           @http.request(request)
         end
       end

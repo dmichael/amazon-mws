@@ -11,15 +11,39 @@ require 'base64'
 require 'builder'
 require "rexml/document"
 
+# ROXML - nokogiri and roxml are the only dependencies
+I_KNOW_I_AM_USING_AN_OLD_AND_BUGGY_VERSION_OF_LIBXML2 = true
+# module ROXML
+#   XML_PARSER = 'nokogiri' # or 'libxml'
+# end
+require 'roxml'
+# /ROXML
+
+
 $:.unshift(File.dirname(__FILE__))
 require 'mws/lib/extensions'
-require_library_or_gem 'builder' unless defined? Builder
-require_library_or_gem 'mime/types', 'mime-types' unless defined? MIME::Types
+require 'builder'
+#require_library_or_gem 'mime/types', 'mime-types' unless defined? MIME::Types
+
+module Amazon
+  module MWS
+  end
+end
+
+
 
 require 'mws/lib/memoizable'
-require 'mws/api'
-require 'mws/api/feeds'
-require 'mws/api/reports'
+
+require 'mws/feed_builder'
+require 'mws/feed_enumerations'
+require 'mws/feed'
+require 'mws/report'
+
+
+require 'mws/response'
+require 'mws/feed_submission'
+Dir.glob(File.join(File.dirname(__FILE__), 'mws/response/*.rb')).each {|f| require f }
+
 require 'mws/base'
 require 'mws/version'
 require 'mws/exceptions'
@@ -30,16 +54,12 @@ require 'mws/authentication'
 require 'mws/authentication/query_string'
 require 'mws/authentication/signature'
 
-require 'mws/feed_builder'
+
+
 
 # This may be overkill
 Amazon::MWS::Base.class_eval do
   include Amazon::MWS::Connection::Management
-end
-
-Amazon::MWS::API.class_eval do
-  extend Amazon::MWS::API::Feeds
-  extend Amazon::MWS::API::Reports
 end
 
 AWS = Amazon

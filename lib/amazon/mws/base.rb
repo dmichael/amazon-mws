@@ -5,7 +5,14 @@ module Amazon
   module MWS
     class Base
       DEFAULT_HOST = "mws.amazonaws.com"
-
+      
+      def self.debug
+        @@debug ||= false
+      end
+      
+      def self.debug=(bool)
+        @@debug = bool
+      end
       # Wraps the current connection's request method and picks the appropriate response class to wrap the response in.
       # If the response is an error, it will raise that error as an exception. All such exceptions can be caught by rescuing
       # their superclass, the ResponseError exception class.
@@ -15,16 +22,9 @@ module Amazon
       def self.request(verb, path, query_params = {}, body = nil, attempts = 0, &block)
         # Find the connection method in connection/management.rb which is evaled into Amazon::MWS::Base
         response = connection.request(verb, path, query_params, body, attempts, &block)
-        body     = response.body
         
-        formatted_response = 
-        if response.content_type =~ /xml/
-          parse_xml_response(body) 
-        else
-          body
-        end
-        
-        return formatted_response
+        # Each calling class is responsible for formatting the result
+        return response
       rescue InternalError, RequestTimeout
         if attempts == 3
           raise
@@ -34,25 +34,6 @@ module Amazon
         end
       end
       
-      def self.parse_xml_response(response)
-        xml = REXML::Document.new(response)
-        
-        # Note: we are dropping the root node which is ALWAYS "#{action}Response"
-        # We should think about dropping the next node which is always "#{action}Result"
-        parse_xml(xml.root)
-      end
-      
-      def self.parse_xml(xml, hash = {})
-        if xml.elements.size.zero?
-          return xml.text
-        else
-          xml.each_element { |element|
-            hash[element.name] = parse_xml(element)
-          }
-        end
-        
-        return hash
-      end
 
       # Make some convenience methods
       [:get, :post, :put, :delete, :head].each do |verb|

@@ -20,13 +20,23 @@ module Amazon
     # of the xml Error and its message. All such runtime generated exception classes descend from ResponseError
     # and contain the ErrorResponse object so that all code that makes a request can rescue ResponseError and get
     # access to the ErrorResponse.
-    class ResponseError < MWSException
-      attr_reader :response
-      def initialize(message, response)
-        @response = response
-        super(message)
-      end
-    end
+    # class ResponseError < MWSException
+    #   def initialize(formatted_response)
+    #     instance_eval(<<-EVAL, __FILE__, __LINE__)
+    #       def request_id
+    #         '#{formatted_response["RequestID"]}'
+    #       end
+    #     EVAL
+    #     
+    #     formatted_response["Error"].each do |key, value|
+    #       instance_eval(<<-EVAL, __FILE__, __LINE__)
+    #         def #{key.underscore}
+    #           '#{value}'
+    #         end
+    #       EVAL
+    #     end
+    #   end
+    # end
     
     class RequestTimeout < ResponseError
     end
