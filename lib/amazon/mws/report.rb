@@ -79,9 +79,7 @@ module Amazon
       # RequestedToDate - The most recent date you are looking for.
     
       def get_report_request_list(params = {})
-        response = 
-        Amazon::MWS::Base.get("/", {"Action" => "GetReportRequestList"}.merge(params))
-        
+        response = Amazon::MWS::Base.get("/", {"Action" => "GetReportRequestList"}.merge(params))
         GetReportRequestListResponse.format(response)
       end
       # add a nice method
@@ -103,7 +101,7 @@ module Amazon
       def get_report_request_list_by_next_token(next_token)
         response = 
          Amazon::MWS::Base.post("/", {
-           "Action"   => "GetReportListByNextToken", 
+           "Action"   => "GetReportRequestListByNextToken", 
            "NextToken" => next_token
          })
 
@@ -117,7 +115,6 @@ module Amazon
     
       def get_report_request_count(params = {})
         response = Amazon::MWS::Base.get("/", {"Action" => "GetReportRequestCount"})
-        
         GetReportRequestCountResponse.format(response)
       end
       # add a nice method
@@ -157,30 +154,162 @@ module Amazon
       # The most recent date you are looking for.
       
       def cancel_report_requests(params = {})
-        response = 
-        Amazon::MWS::Base.post("/", {"Action" => "CancelReportRequests"}.merge(params))
-
+        response = Amazon::MWS::Base.post("/", {"Action" => "CancelReportRequests"}.merge(params))
         CancelReportRequestsResponse.format(response)
       end
 
       alias_method :cancel_requests, :cancel_report_requests
       
+      # GetReportList
+      # The GetReportList operation returns a list of reports within the
+      # previous 90 days that match the query parameters. The maximum number
+      # of results that will be returned in one call is one hundred. If there
+      # are additional results to return, HasNext will be returned in the
+      # response with a true value. To retrieve all the results, you can use
+      # the value of the NextToken parameter to call GetReportListByNextToken
+      # until HasNext is false.
+      # 
+      # Request Parameters
       
-      
-      
-      
-         
-      def get_report(report_id, params = {})
-        response = Amazon::MWS::Base.get("/", {"Action" => "GetReport", "ReportId" => report_id})
+      def get_report_list(params = {})
+        response = Amazon::MWS::Base.post("/", {"Action" => "GetReportList"}.merge(params))
+        GetReportListResponse.format(response)
       end
-    
+
+      alias_method :list, :get_report_list
+      
+      # GetReportCount
+      # The GetReportCount operation returns a count of reports within the
+      # previous 90 days that are available for the seller to download.
+
+      #  ReportTypeList
+      # A structured ReportType list by which to filter reports.
+      #      
+      # Acknowledged
+      # Set to true to list reports that have been acknowledged with a prior
+      # call to UpdateReportAcknowledgements. Set to false to list reports
+      # that have not been acknowledged.
+      #
+      # AvailableFromDate
+      # The earliest date you are looking for, in ISO8601 date format (for
+      # example, "2008-07-03T18:12:22Z" or "2008-07-03T18:12:22.093-07:00").
+      # 
+      # AvailableToDate
+      # The most recent date you are looking for.
+      
       def get_report_count(params = {})
         response = Amazon::MWS::Base.get("/", {"Action" => "GetReportCount"})
+        GetReportCountResponse.format(response)
+      end 
+      
+      alias_method :count, :get_report_count     
+
+      # GetReport
+      # Description
+      # 
+      # The GetReport operation returns the contents of a report and the
+      # Content-MD5 header for the returned body. Reports are retained for 90
+      # days from the time they have been generated.
+      # 
+      # Amazon MWS limits calls to 1,000 total calls per hour per seller
+      # account, including a limit of 60 calls per hour to GetReport.
+      # 
+      # You should compute the MD5 hash of the HTTP body and compare that with
+      # the returned Content-MD5 header value. If they do not match, which
+      # means the body was corrupted during transmission, you should discard
+      # the result and automatically retry the call for up to three more
+      # times. Please notify us if you ever see such a corrupted body. You can
+      # contact us by using the contact form at http://mws.amazon.com
+      # (http://mws.amazon.com). For more information, see Using the
+      # Content-MD5 Header with SubmitFeed.     
+      #    
+      
+      def get_report(report_id, params = {})
+        response = Amazon::MWS::Base.get("/", {"Action" => "GetReport", "ReportId" => report_id})
+        # TODO format response
       end
-    
-      def get_report_list(params = {})
-        response = Amazon::MWS::Base.get("/", {"Action" => "GetReportList"})
+      alias_method :count, :get_report_count    
+
+      # ManageReportSchedule
+      # The ManageReportSchedule operation creates, updates, or deletes a
+      # report schedule for a particular report type. Currently, only order
+      # reports can be scheduled.
+      # 
+      # Request Parameters  
+      #
+      # ReportType
+      # The type of reports that you want to schedule generation of.
+      # Currently, only order reports can be scheduled.
+      #
+      # Schedule
+      # A string that describes how often a ReportRequest should be created.
+      # The list of enumerated values is found in the enumeration topic,
+      # Schedule.
+      # 
+      # ScheduledDate
+      # The date when the next report is scheduled to run. Limited to no more
+      # than 366 days in the future.
+      
+      def manage_report_schedule(report_type, schedule, params={})
+        raise InvalidReportType if !REPORT_TYPES.include?(report_type)
+        raise InvalidSchedule if !SCHEDULE.include?(schedule)
+        
+        response = 
+        Amazon::MWS::Base.get("/", {
+          "Action" => "ManageReportSchedule", 
+          "Schedule" => schedule,
+          "ReportType" => report_type
+        })
+        
+        ManageReportScheduleResponse.format(reponse)
       end
+      
+      alias_method :manage_schedule, :manage_report_schedule
+      
+      
+      # GetReportScheduleList
+      # The GetReportScheduleList operation returns a list of report schedules
+      # that match the query parameters. Currently, only order reports can be
+      # scheduled.
+      # 
+      # The maximum number of results that will be returned in one call is one
+      # hundred. If there are additional results to return, HasNext will be
+      # returned in the response with a true value. To retrieve all the
+      # results, you can use the value of the NextToken parameter to call
+      # GetReportScheduleListByNextToken until HasNext is false.
+      # [Note]  Note
+      # 
+      # For this release of Amazon MWS, only order reports can be scheduled,
+      # so HasNext will always be False.
+      
+      
+      def get_report_schedule_list(params = {})
+        response = Amazon::MWS::Base.post("/", {"Action" => "GetReportScheduleList"}.merge(params))
+        GetReportScheduleListResponse.format(response)
+      end
+
+      alias_method :schedule_list, :get_report_schedule_list
+      
+      
+      def get_report_schedule_list_by_next_token(next_token)
+        response = 
+         Amazon::MWS::Base.post("/", {
+           "Action"   => "GetReportScheduleListByNextToken", 
+           "NextToken" => next_token
+         })
+
+         GetReportScheduleListByNextTokenResponse.format(response)
+      end
+
+      alias_method :schedule_list_by_next_token, :get_report_schedule_list_by_next_token      
+      
+      def get_report_schedule_count(params = {})
+        response = Amazon::MWS::Base.get("/", {"Action" => "GetReportScheduleCount"})
+        GetReportScheduleCountResponse.format(response)
+      end 
+      
+      alias_method :count, :get_report_schedule_count
+      
     end
     
     end

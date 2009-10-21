@@ -16,6 +16,24 @@ class Amazon::MWS::Report
         :flat_file_orders           => '_GET_FLAT_FILE_ORDERS_DATA_',
         :converged_flat_file_order_report => '_GET_CONVERGED_FLAT_FILE_ORDER_REPORT_DATA_'
       }
+      
+      SCHEDULE = {
+        '15 minutes' =>	'_15_MINUTES_',
+        '30 minutes' =>	'_30_MINUTES_',
+        '1 hour'	   => '_1_HOUR_',
+        '2 hours'	   => '_2_HOURS_',
+        '4 hours'	   => '_4_HOURS_',
+        '8 hours'	   => '_8_HOURS_',
+        '12 hours'   => '_12_HOURS_',
+        '1 day'	     => '_1_DAY_',
+        '2 days'     =>	'_2_DAYS_',
+        '3 days'     =>	'_72_HOURS_',
+        '7 days'     =>	'_7_DAYS_',
+        '14 days'	   => '_14_DAYS_',
+        '15 days'	   => '_15_DAYS_',
+        '30 days'	   => '_30_DAYS_',
+        'Delete'     =>	'_NEVER_'
+      }
     end
     
 end

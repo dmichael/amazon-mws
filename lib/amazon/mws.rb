@@ -44,6 +44,8 @@ require 'mws/report'
 require 'mws/response'
 require 'mws/feed_submission'
 require 'mws/report_request'
+require 'mws/report_info'
+require 'mws/report_schedule'
 Dir.glob(File.join(File.dirname(__FILE__), 'mws/response/*.rb')).each {|f| require f }
 
 require 'mws/base'

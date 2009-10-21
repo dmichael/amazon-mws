@@ -117,5 +117,81 @@ class ResponseTest < Test::Unit::TestCase
     assert_equal(1, response.report_requests.size)
     assert_equal('a720f9d6-83e9-4684-bc35-065b41ed5ca4', response.request_id)
   end
+  
+  def test_get_report_list_response
+    response = GetReportListResponse.format(xml_for('get_report_list'))
+    
+    assert_equal("fbf677c1-dcee-4110-bc88-2ba3702e331b", response.request_id)
+    assert(response.has_next?)
+    #assert_equal(response.next_token, "2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=")
+    assert_equal(response.reports.size, 1)
+    
+    assert_equal(898899473, response.reports.first.id)
+    assert_equal('_GET_MERCHANT_LISTINGS_DATA_', response.reports.first.type)
+    assert_equal(2278662938, response.reports.first.report_request_id)
+    assert_equal(Time.parse('Tue Feb 10 04:22:33 -0500 2009'), response.reports.first.available_date)
+    assert_equal(response.reports.first.acknowledged?, false)
+  end
+  
+  def test_get_report_count
+    response = GetReportCountResponse.format(xml_for('get_report_count'))
+  
+    assert_equal(166, response.count)
+    assert_equal('a497aadb-5ea1-49bf-aa14-dabe914465e3', response.request_id)
+  end
+  
+  def test_manage_report_schedule
+    response = ManageReportScheduleResponse.format(xml_for('manage_report_schedule'))
+  
+    assert_equal(1, response.count)
+    assert_equal('7ee1bc50-5a13-4db1-afd7-1386e481984e', response.request_id)
+
+    assert(response.report_schedule)
+    assert_equal('_GET_ORDERS_DATA_', response.report_schedule.report_type)
+    assert_equal('_30_DAYS_', response.report_schedule.schedule) 
+    assert_equal(Time.parse('2009-02-20T02:10:42+00:00'), response.report_schedule.scheduled_date)
+  end
+  
+  def test_get_report_schedule_list_response
+    response = GetReportScheduleListResponse.format(xml_for('get_report_schedule_list'))
+    
+    assert_equal("c0464157-b74f-4e52-bd1a-4ebf4bc7e5aa", response.request_id)
+    assert(response.has_next?)
+    assert_equal("4XgYW55IPQhcm5hbCBwbGVhc3VyZS4=", response.next_token)
+    
+    assert_equal(response.report_schedules.size, 1)
+    
+    assert_equal('_GET_ORDERS_DATA_', response.report_schedules[0].report_type)
+    assert_equal('_30_DAYS_', response.report_schedules[0].schedule) 
+    assert_equal(Time.parse('2009-02-20T02:10:42+00:00'), response.report_schedules[0].scheduled_date)
+  end
+  
+  def test_get_report_schedule_list_by_next_token
+    response = GetReportScheduleListByNextTokenResponse.format(xml_for('get_report_schedule_list_by_next_token'))
+    
+    assert_equal("c0464157-b74f-4e52-bd1a-4ebf4bc7e5aa", response.request_id)
+    assert_equal('none', response.next_token)
+    assert_equal(false, response.has_next?) # same as false ???
+
+    assert_equal(1, response.report_schedules.size)
+    # assert_equal(13050620, response.report_schedules[0].id)
+    assert_equal('c0464157-b74f-4e52-bd1a-4ebf4bc7e5aa', response.request_id)
+  end
+  
+  def test_get_report_schedule_count
+    response = GetReportScheduleCountResponse.format(xml_for('get_report_schedule_count'))
+  
+    assert_equal(18, response.count)
+    assert_equal('21e482a8-15c7-4da3-91a4-424995ed0756', response.request_id)
+  end
+  
+  def test_update_report_acknowledgements
+    response = UpdateReportAcknowledgementsResponse.format(xml_for('update_report_acknowledgements'))
+  
+    assert_equal(1, response.count)
+    assert_equal('42a578a7-ed92-486b-ac67-5de7464fcdfa', response.request_id)
+    assert(response.reports)
+  end
+  
 end
 
