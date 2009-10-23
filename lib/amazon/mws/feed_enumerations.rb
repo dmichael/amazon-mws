@@ -1,4 +1,6 @@
-class Amazon::MWS::Feed
+module Amazon
+  module MWS
+    module Feed
 
     module Enumerations
       
@@ -39,4 +41,6 @@ class Amazon::MWS::Feed
 
     end
     
+    end
+  end
 end

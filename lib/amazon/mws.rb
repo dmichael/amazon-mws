@@ -59,11 +59,9 @@ require 'mws/authentication/query_string'
 require 'mws/authentication/signature'
 
 
-
-
-# This may be overkill
 Amazon::MWS::Base.class_eval do
-  include Amazon::MWS::Connection::Management
+  include Amazon::MWS::Feed
+  include Amazon::MWS::Report
 end
 
 AWS = Amazon

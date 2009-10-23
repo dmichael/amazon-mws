@@ -26,7 +26,7 @@ class Amazon::MWS::Authentication
     
     def string_to_sign(verb, querystring)
       verb   = verb.to_s.upcase
-      string = "#{verb}\n#{Amazon::MWS::Base::DEFAULT_HOST}\n/\n#{querystring}"
+      string = "#{verb}\n#{Amazon::MWS::DEFAULT_HOST}\n/\n#{querystring}"
     end
     
     memoize :string_to_sign

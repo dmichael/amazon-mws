@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ErrorResponse xmlns="http://mws.amazonaws.com/doc/2009-01-01/">
+  <Error>
+    <Type>Sender</Type>
+    <Code>AccessDenied</Code>
+    <Message>Access to the resource Marketplace MARKETPLACE_ID is not a valid marketplace is denied.</Message>
+    <Detail/>
+  </Error>
+  <RequestID>75a808dd-72c6-4af4-b4ba-4b00f3153940</RequestID>
+</ErrorResponse>

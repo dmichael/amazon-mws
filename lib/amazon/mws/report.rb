@@ -1,9 +1,9 @@
 module Amazon
   module MWS
 
-    class Report
+    module Report
       include Enumerations
-      class << self
+      # class << self
     
       # The RequestReport operation requests the generation of a report, which
       # creates a report request. Reports are retained for 90 days.
@@ -28,12 +28,10 @@ module Amazon
         query_params.merge!({"StartDate" => start_date}) if start_date
         query_params.merge!({"EndDate" => end_date}) if end_date
             
-        response = Amazon::MWS::Base.get("/", query_params)
+        response = get("/", query_params)
         
         RequestReportResponse.format(response)
       end
-      # add a nice method
-      alias_method :request, :request_report
 
       # GetReportRequestList
       # --------------------
@@ -79,11 +77,11 @@ module Amazon
       # RequestedToDate - The most recent date you are looking for.
     
       def get_report_request_list(params = {})
-        response = Amazon::MWS::Base.get("/", {"Action" => "GetReportRequestList"}.merge(params))
+        response = get("/", {"Action" => "GetReportRequestList"}.merge(params))
         GetReportRequestListResponse.format(response)
       end
       # add a nice method
-      alias_method :request_list, :get_report_request_list
+      alias_method :report_request_list, :get_report_request_list
     
       # GetReportRequestListByNextToken
       # Description
@@ -100,7 +98,7 @@ module Amazon
       
       def get_report_request_list_by_next_token(next_token)
         response = 
-         Amazon::MWS::Base.post("/", {
+         post("/", {
            "Action"   => "GetReportRequestListByNextToken", 
            "NextToken" => next_token
          })
@@ -108,17 +106,17 @@ module Amazon
          GetReportRequestListByNextTokenResponse.format(response)
       end
 
-      alias_method :request_list_by_next_token, :get_report_request_list_by_next_token      
+      alias_method :report_request_list_by_next_token, :get_report_request_list_by_next_token      
     
       # GetReportRequestCount
       # The GetReportRequestCount returns a count of report requests.
     
       def get_report_request_count(params = {})
-        response = Amazon::MWS::Base.get("/", {"Action" => "GetReportRequestCount"})
+        response = get("/", {"Action" => "GetReportRequestCount"})
         GetReportRequestCountResponse.format(response)
       end
       # add a nice method
-      alias_method :request_count, :get_report_request_count
+      alias_method :report_request_count, :get_report_request_count
     
       # CancelReportRequests
       # The CancelReportRequests operation cancels one or more report
@@ -154,12 +152,10 @@ module Amazon
       # The most recent date you are looking for.
       
       def cancel_report_requests(params = {})
-        response = Amazon::MWS::Base.post("/", {"Action" => "CancelReportRequests"}.merge(params))
+        response = get("/", {"Action" => "CancelReportRequests"}.merge(params))
         CancelReportRequestsResponse.format(response)
       end
-
-      alias_method :cancel_requests, :cancel_report_requests
-      
+            
       # GetReportList
       # The GetReportList operation returns a list of reports within the
       # previous 90 days that match the query parameters. The maximum number
@@ -172,11 +168,11 @@ module Amazon
       # Request Parameters
       
       def get_report_list(params = {})
-        response = Amazon::MWS::Base.post("/", {"Action" => "GetReportList"}.merge(params))
+        response = get("/", {"Action" => "GetReportList"}.merge(params))
         GetReportListResponse.format(response)
       end
 
-      alias_method :list, :get_report_list
+      alias_method :report_list, :get_report_list
       
       # GetReportCount
       # The GetReportCount operation returns a count of reports within the
@@ -198,11 +194,11 @@ module Amazon
       # The most recent date you are looking for.
       
       def get_report_count(params = {})
-        response = Amazon::MWS::Base.get("/", {"Action" => "GetReportCount"})
+        response = get("/", {"Action" => "GetReportCount"})
         GetReportCountResponse.format(response)
       end 
       
-      alias_method :count, :get_report_count     
+      alias_method :report_count, :get_report_count     
 
       # GetReport
       # Description
@@ -225,10 +221,10 @@ module Amazon
       #    
       
       def get_report(report_id, params = {})
-        response = Amazon::MWS::Base.get("/", {"Action" => "GetReport", "ReportId" => report_id})
+        response = get("/", {"Action" => "GetReport", "ReportId" => report_id})
         # TODO format response
       end
-      alias_method :count, :get_report_count    
+      alias_method :report, :get_report
 
       # ManageReportSchedule
       # The ManageReportSchedule operation creates, updates, or deletes a
@@ -255,7 +251,7 @@ module Amazon
         raise InvalidSchedule if !SCHEDULE.include?(schedule)
         
         response = 
-        Amazon::MWS::Base.get("/", {
+        get("/", {
           "Action" => "ManageReportSchedule", 
           "Schedule" => schedule,
           "ReportType" => report_type
@@ -263,9 +259,6 @@ module Amazon
         
         ManageReportScheduleResponse.format(reponse)
       end
-      
-      alias_method :manage_schedule, :manage_report_schedule
-      
       
       # GetReportScheduleList
       # The GetReportScheduleList operation returns a list of report schedules
@@ -284,16 +277,16 @@ module Amazon
       
       
       def get_report_schedule_list(params = {})
-        response = Amazon::MWS::Base.post("/", {"Action" => "GetReportScheduleList"}.merge(params))
+        response = get("/", {"Action" => "GetReportScheduleList"}.merge(params))
         GetReportScheduleListResponse.format(response)
       end
 
-      alias_method :schedule_list, :get_report_schedule_list
+      alias_method :report_schedule_list, :get_report_schedule_list
       
       
       def get_report_schedule_list_by_next_token(next_token)
         response = 
-         Amazon::MWS::Base.post("/", {
+         get("/", {
            "Action"   => "GetReportScheduleListByNextToken", 
            "NextToken" => next_token
          })
@@ -301,17 +294,17 @@ module Amazon
          GetReportScheduleListByNextTokenResponse.format(response)
       end
 
-      alias_method :schedule_list_by_next_token, :get_report_schedule_list_by_next_token      
+      alias_method :report_schedule_list_by_next_token, :get_report_schedule_list_by_next_token      
       
       def get_report_schedule_count(params = {})
-        response = Amazon::MWS::Base.get("/", {"Action" => "GetReportScheduleCount"})
+        response = get("/", {"Action" => "GetReportScheduleCount"})
         GetReportScheduleCountResponse.format(response)
       end 
       
-      alias_method :count, :get_report_schedule_count
+      alias_method :report_schedule_count, :get_report_schedule_count
       
     end
     
-    end
+    # end
   end
 end

@@ -31,7 +31,7 @@ class Amazon::MWS::Connection
     # sent, protecting you from corrupted descriptive or pricing product data appearing on Amazon.com. 
     #
     def add_host
-      @request['Host'] = Amazon::MWS::Base::DEFAULT_HOST
+      @request['Host'] = Amazon::MWS::DEFAULT_HOST
       return self
     end
     

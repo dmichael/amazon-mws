@@ -11,13 +11,15 @@ module Amazon
       
       def initialize(params = {})
         # These values are essential to establishing a connection
-        @server            = params['server'] || Amazon::MWS::Base::DEFAULT_HOST
+        @server            = params['server'] || Amazon::MWS::DEFAULT_HOST
         @persistent        = params['persistent'] || false
         # These values are essential to signing requests
         @access_key        = params['access_key']
         @secret_access_key = params['secret_access_key']
         @merchant_id       = params['merchant_id']
         @marketplace_id    = params['marketplace_id']
+        
+        raise MissingConnectionOptions if [@access_key, @secret_access_key, @merchant_id, @marketplace_id].any? {|option| option.nil?}
         
         @http = connect
       end

@@ -40,7 +40,7 @@ class Amazon::MWS::Connection
       def establish_connection!(options = {})
         # After you've already established the default connection, just specify 
         # the difference for subsequent connections
-        options = default_connection.options.merge(options) if connected?
+        #options = default_connection.options.merge(options) if connected?
         connections[connection_name] = Amazon::MWS::Connection.connect(options)
       end
     

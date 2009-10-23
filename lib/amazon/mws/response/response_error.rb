@@ -2,12 +2,13 @@ module Amazon
   module MWS
     
     class ResponseError < Response
-      xml_name "FeedSubmissionInfo"
+      xml_name "ErrorResponse"
       
-      xml_reader :feed_submission_id, :as => Integer
-      xml_reader :feed_type
-      xml_reader :submitted_date, :as => Time
-      xml_reader :feed_processing_status
+      xml_reader :type, :in => "Error"
+      xml_reader :code, :in => "Error"    
+      xml_reader :message, :in => "Error"    
+      xml_reader :detail, :in => "Error"
+      xml_reader :request_id   
     end
     
   end

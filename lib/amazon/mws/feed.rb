@@ -1,9 +1,9 @@
 module Amazon
   module MWS
     
-    class Feed
+    module Feed
       include Enumerations
-      class << self
+      # class << self
       # The SubmitFeed operation uploads a file for processing together with
       # the necessary metadata to process the file.
 
@@ -21,7 +21,7 @@ module Amazon
         body = Amazon::MWS::FeedBuilder.new(message_type, message)
         
         response = 
-        Amazon::MWS::Base.post("/", {
+        post("/", {
           "Action"   => "SubmitFeed", 
           "FeedType" => FEED_TYPES[feed_type]
         }, body)
@@ -78,12 +78,12 @@ module Amazon
       
       def get_feed_submission_list(params = {})
        response = 
-       Amazon::MWS::Base.post("/", {"Action" => "GetFeedSubmissionList"}.merge(params))
+       get("/", {"Action" => "GetFeedSubmissionList"}.merge(params))
        
-       result = GetFeedSubmissionListResponse.format(reponse)
+       result = GetFeedSubmissionListResponse.format(response)
       end
 
-      alias_method :submission_list, :get_feed_submission_list
+      alias_method :feed_submission_list, :get_feed_submission_list
 
       # The GetFeedSubmissionListByNextToken operation returns a list of
       # feed submissions that match the query parameters, using the
@@ -98,7 +98,7 @@ module Amazon
       # GetFeedSubmissionListByNextToken when the value of HasNext was true.
       def get_feed_submission_list_by_next_token(next_token)
         response = 
-         Amazon::MWS::Base.post("/", {
+         get("/", {
            "Action"   => "GetFeedSubmissionListByNextToken", 
            "NextToken" => next_token
          })
@@ -106,7 +106,7 @@ module Amazon
          GetFeedSubmissionListByNextTokenResponse.format(response)
       end
       
-      alias_method :submission_list_by_next_token, :get_feed_submission_list_by_next_token
+      alias_method :feed_submission_list_by_next_token, :get_feed_submission_list_by_next_token
 
       # The GetFeedsubmissionCount operation returns a count of the total
       # number of feed submissions within the previous 90 days.
@@ -138,12 +138,12 @@ module Amazon
       
       def get_feed_submission_count(params = {})
         response = 
-        Amazon::MWS::Base.post("/", {"Action" => "GetFeedSubmissionCount"}.merge(params))
+        get("/", {"Action" => "GetFeedSubmissionCount"}.merge(params))
         
         GetFeedSubmissionCountResponse.format(response)
       end
       
-      alias_method :submission_count, :get_feed_submission_count
+      alias_method :feed_submission_count, :get_feed_submission_count
       
 
       # The CancelFeedSubmissions operation cancels one or more feed
@@ -181,12 +181,10 @@ module Amazon
 
       def cancel_feed_submissions(params = {})
         response = 
-        Amazon::MWS::Base.post("/", {"Action" => "CancelFeedSubmissions"}.merge(params))
+        get("/", {"Action" => "CancelFeedSubmissions"}.merge(params))
 
         CancelFeedSubmissionsResponse.format(response)
       end
-
-      alias_method :cancel_submissions, :cancel_feed_submissions
 
       # The GetFeedSubmissionResult operation returns the feed processing
       # report and the Content-MD5 header for the returned body.
@@ -207,7 +205,7 @@ module Amazon
       
       def get_feed_submission_result(feed_submission_id)
         response = 
-        Amazon::MWS::Base.post("/", {
+        get("/", {
           "Action"           => "GetFeedSubmissionResult", 
           "FeedSubmissionId" => feed_submission_id
         }.merge(params))
@@ -215,10 +213,10 @@ module Amazon
         GetFeedSubmissionResultResponse.format(response)
       end
 
-      alias_method :submission_result, :get_feed_submission_result
+      alias_method :feed_submission_result, :get_feed_submission_result
     end
     
-    end
+    # end
     # Feed
     
   end
