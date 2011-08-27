@@ -1,6 +1,6 @@
 module Amazon
   module MWS
-    DEFAULT_HOST = "mws.amazonaws.com"
+    DEFAULT_HOST = "mws.amazonservices.com"
     
     class Base
       attr_accessor :connection

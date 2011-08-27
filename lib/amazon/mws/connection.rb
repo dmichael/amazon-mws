@@ -78,7 +78,8 @@ module Amazon
           :access_key        => @access_key,
           :secret_access_key => @secret_access_key,
           :merchant_id       => @merchant_id,
-          :marketplace_id    => @marketplace_id
+          :marketplace_id    => @marketplace_id,
+          :server            => @server
         )
       end
       

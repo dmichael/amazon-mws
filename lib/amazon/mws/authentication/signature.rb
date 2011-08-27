@@ -1,16 +1,18 @@
 class Amazon::MWS::Authentication
   
-  class Signature < String#:nodoc:
+  class Signature < String # :nodoc:
     extend Memoizable
     
     VERSION = '2'
     METHOD  = 'HmacSHA256'
 
     def initialize(queryparams = {}, params = {})
-      verb   = params[:verb]
+      verb = params[:verb]
       secret = params[:secret_access_key]
+      host = params[:server]
+
       # Create the string to sign
-      string = string_to_sign(verb, canonical_querystring(queryparams))
+      string = string_to_sign(verb, canonical_querystring(queryparams), host)
       self << sign(string, secret)
     end
   
@@ -24,9 +26,11 @@ class Amazon::MWS::Authentication
     
     memoize :sign
     
-    def string_to_sign(verb, querystring)
-      verb   = verb.to_s.upcase
-      string = "#{verb}\n#{Amazon::MWS::DEFAULT_HOST}\n/\n#{querystring}"
+    def string_to_sign(verb, querystring, host)
+      verb = verb.to_s.upcase
+      string = "#{verb}\n#{host}\n/\n#{querystring}"
+      puts string if Amazon::MWS::Base.debug
+      string
     end
     
     memoize :string_to_sign
