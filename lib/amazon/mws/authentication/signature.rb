@@ -8,7 +8,12 @@ class Amazon::MWS::Authentication
 
     def initialize(queryparams = {}, params = {})
       verb = params[:verb]
+
+      # The secret access key is required so that the signing process can
+      # be initialized
       secret = params[:secret_access_key]
+      raise Amazon::MWS::MissingAccessKey.new(params) if secret.nil?
+
       host = params[:server]
 
       # Create the string to sign

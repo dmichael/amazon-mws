@@ -27,4 +27,11 @@ class SignatureTest < Test::Unit::TestCase
     assert_equal(@expected_base64, signature)
     assert_equal(@expected_digest, Base64.decode64(signature))
   end
+
+  def test_raises_when_secret_key_missing
+    assert_raise(Amazon::MWS::MissingAccessKey) {
+      Amazon::MWS::Authentication::Signature.new()
+    }
+  end
+
 end
