@@ -1,4 +1,5 @@
 begin
+  require 'rubygems'
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "amazon-mws"

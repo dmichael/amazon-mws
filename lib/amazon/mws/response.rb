@@ -16,6 +16,7 @@ module Amazon
       
       def self.parse_xml(response)
         if [Net::HTTPClientError, Net::HTTPServerError].any? {|error| response.is_a? error }
+          puts "ERROR: #{response} -- #{response.body}"
           return ResponseError.from_xml(response.body)
         else
           return self.from_xml(response.body)

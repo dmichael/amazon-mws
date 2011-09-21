@@ -26,7 +26,7 @@ module Amazon
       MESSAGE_TYPES = [
         "FulfillmentCenter",
         "Inventory",
-        "OrderAcknowledgment",
+        "OrderAcknowledgement",
         "OrderAdjustment",
         "OrderFulfillment",
         "OrderReport",

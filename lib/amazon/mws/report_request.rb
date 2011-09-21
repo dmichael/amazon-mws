@@ -5,6 +5,7 @@ module Amazon
       xml_name "ReportRequestInfo"
 
       xml_reader :id, :from => "ReportRequestId", :as => Integer
+      xml_reader :report_id, :from => "GeneratedReportId", :as => Integer
       xml_reader :report_type
       xml_reader :start_date, :as => Time
       xml_reader :end_date, :as => Time
