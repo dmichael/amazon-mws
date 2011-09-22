@@ -39,7 +39,8 @@ require 'mws/feed_enumerations'
 require 'mws/feed'
 require 'mws/report_enumerations'
 require 'mws/report'
-
+require 'mws/orders'
+require 'mws/orders_request'
 
 require 'mws/response'
 require 'mws/feed_submission'
