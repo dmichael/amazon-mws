@@ -1,15 +1,14 @@
 class Amazon::MWS::Authentication  
   
-  class QueryString < String
+  class NewQueryString < String
     def initialize(params = {})
       query_params = {
         'AWSAccessKeyId'   => params[:access_key],
-        'Marketplace'      => params[:marketplace_id],
-        'Merchant'         => params[:merchant_id],
+		'SellerId'         => params[:merchant_id],
         'SignatureMethod'  => Signature::METHOD,
         'SignatureVersion' => Signature::VERSION,
         'Timestamp'        => Time.now.iso8601,
-        'Version'          => '2009-01-01'
+        'Version'          => Amazon::MWS::Authentication::VERSION
       }
       
       # Add any params that are passed in via uri before calculating the signature

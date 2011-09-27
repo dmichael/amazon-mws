@@ -39,14 +39,14 @@ require 'mws/feed_enumerations'
 require 'mws/feed'
 require 'mws/report_enumerations'
 require 'mws/report'
-require 'mws/orders'
-require 'mws/orders_request'
 
 require 'mws/response'
 require 'mws/feed_submission'
 require 'mws/report_request'
 require 'mws/report_info'
 require 'mws/report_schedule'
+require 'mws/orders'
+require 'mws/orders_request'
 Dir.glob(File.join(File.dirname(__FILE__), 'mws/response/*.rb')).each {|f| require f }
 
 require 'mws/base'
@@ -57,12 +57,13 @@ require 'mws/connection/management'
 require 'mws/connection/request_builder'
 require 'mws/authentication'
 require 'mws/authentication/query_string'
+require 'mws/authentication/new_query_string'
 require 'mws/authentication/signature'
-
 
 Amazon::MWS::Base.class_eval do
   include Amazon::MWS::Feed
   include Amazon::MWS::Report
+	include Amazon::MWS::Orders
 end
 
 AWS = Amazon

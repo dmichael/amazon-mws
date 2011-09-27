@@ -18,6 +18,7 @@ module Amazon
         @secret_access_key = params['secret_access_key']
         @merchant_id       = params['merchant_id']
         @marketplace_id    = params['marketplace_id']
+		@path = '/'
         
         raise MissingConnectionOptions if [@access_key, @secret_access_key, @merchant_id, @marketplace_id].any? {|option| option.nil?}
         
@@ -35,6 +36,7 @@ module Amazon
       # Make the request, based on the apropriate request object
       # Called from Amazon::MWS::Base
       def request(verb, path, query_params, body = nil, attempts = 0, &block)
+		@path = path
         # presumably this is for files
         body.rewind if body.respond_to?(:rewind) unless attempts.zero?
         # Prepare the Proc to be called by Net::HTTP
@@ -65,7 +67,12 @@ module Amazon
       # Create the signed authentication query string.
       # Add this query string to the path WITHOUT prepending the server address.
       def prepare_path(verb, path, query_params)
-        query_string = authenticate_query_string(verb, query_params)
+				if path.include? 'Orders'
+        	query_string = authenticate_new_query_string(verb, query_params)
+				else
+					query_string = authenticate_query_string(verb, query_params)
+				end
+				#puts "path: #{path}?#{query_string}"
         return "#{path}?#{query_string}"
       end
       
@@ -79,10 +86,24 @@ module Amazon
           :secret_access_key => @secret_access_key,
           :merchant_id       => @merchant_id,
           :marketplace_id    => @marketplace_id,
-          :server            => @server
+          :server            => @server,
+					:path							 => @path
         )
       end
       
+			def authenticate_new_query_string(verb, query_params = {})        
+        Authentication::NewQueryString.new(
+          :verb              => verb,
+          :query_params      => query_params,
+          :access_key        => @access_key,
+          :secret_access_key => @secret_access_key,
+          :merchant_id       => @merchant_id,
+          :marketplace_id    => @marketplace_id,
+          :server            => @server,
+					:path							 => @path
+        )
+      end
+			
       # Builds up a Net::HTTP request object
       def build_request(verb, path, body = nil)
         builder = RequestBuilder.new(verb, path, body)

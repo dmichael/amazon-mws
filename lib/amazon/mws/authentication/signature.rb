@@ -10,7 +10,7 @@ class Amazon::MWS::Authentication
       verb   = params[:verb]
       secret = params[:secret_access_key]
       # Create the string to sign
-      string = string_to_sign(verb, canonical_querystring(queryparams), params[:server])
+      string = string_to_sign(verb, canonical_querystring(queryparams), params[:server], params[:path])
       self << sign(string, secret)
     end
   
@@ -24,9 +24,9 @@ class Amazon::MWS::Authentication
     
     memoize :sign
     
-    def string_to_sign(verb, querystring, server)
+    def string_to_sign(verb, querystring, server, path)
       verb   = verb.to_s.upcase
-      string = "#{verb}\n#{server}\n/\n#{querystring}"
+      string = "#{verb}\n#{server}\n#{path}\n#{querystring}"
     end
     
     memoize :string_to_sign

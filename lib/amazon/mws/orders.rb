@@ -1,8 +1,8 @@
 module Amazon
   module MWS
-    class Orders
+    module Orders
 			
-			def request_orders_list(params ={})
+			def get_orders_list(params ={})
         
 				created_after = params[:created_after]
         created_before = params[:created_before]
@@ -30,24 +30,24 @@ module Amazon
 				
 				if fulfillment_channel
 					i = 1
-					fulfillment_channel.to_a.each{|channel| query_params.merge!({'FulfillmentChannel.Channel.#{i++}' => channel})}
+					fulfillment_channel.to_a.each{|channel| query_params.merge!({"FulfillmentChannel.Channel.#{i}" => channel}); i += 1 }
 				end
 	 			
 				if order_status
 					i = 1
-					order_status.to_a.each{|status| query_params.merge!({'OrderStatus.Status.#{i++}' => status})}
+					order_status.to_a.each{|status| query_params.merge!({"OrderStatus.Status.#{i}" => status}); i += 1 }	
 				end
 				
 				if marketplace_id
 					i = 1
-					marketplace_id.to_a.each{|id| query_params.merge!({'MarketplaceId.Id.#{i++}' => id})}
+					marketplace_id.to_a.each{|id| query_params.merge!({"MarketplaceId.Id.#{i}" => id}); i += 1 }
 				end
             
-        response = get("/Orders/", query_params)
-        response
+        response = post("/Orders/#{Authentication::VERSION}", query_params)
+        #RequestOrdersResponse.format(response)
       end
 			
-			def request_list_order_items(params ={})
+			def get_list_order_items(params ={})
         amazon_order_id = params[:amazon_order_id]
         
         query_params = {
@@ -55,10 +55,27 @@ module Amazon
         }
       	if amazon_order_id
 		      query_params.merge!({"AmazonOrderId" => amazon_order_id}) 
-		      response = get("/Orders/", query_params)
-		      response
+		      response = post("/Orders/#{Authentication::VERSION}", query_params)
+		      response.body
 				end
       end
+
+			def get_orders(params ={})
+        amazon_order_id = params[:amazon_order_id]
+        
+        query_params = {
+          "Action"   => "GetOrder"
+        }
+
+      	if amazon_order_id
+					i = 1
+					amazon_order_id.to_a.each{|id| query_params.merge!({"AmazonOrderId.Id.#{i}" => id}); i += 1 } 
+				end
+				
+				response = post("/Orders/#{Authentication::VERSION}", query_params)
+		    response.body
+      end
+
     end
   end
 end
