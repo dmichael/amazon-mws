@@ -56,7 +56,6 @@ module Amazon
       	if amazon_order_id
 		      query_params.merge!({"AmazonOrderId" => amazon_order_id}) 
 		      response = post("/Orders/#{Authentication::VERSION}", query_params)
-		      response.body
 				end
       end
 
@@ -73,7 +72,6 @@ module Amazon
 				end
 				
 				response = post("/Orders/#{Authentication::VERSION}", query_params)
-		    response.body
       end
 
     end
