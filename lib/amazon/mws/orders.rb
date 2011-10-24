@@ -47,6 +47,18 @@ module Amazon
         #RequestOrdersResponse.format(response)
       end
 			
+      def get_orders_list_by_next_token(params ={})
+        next_token = params[:next_token]
+        
+        query_params = {
+          "Action"   => "ListOrdersByNextToken"
+        }
+      	if next_token
+		      query_params.merge!({"NextToken" => next_token}) 
+				end
+				response = post("/Orders/#{Authentication::VERSION}", query_params)
+      end
+      
 			def get_list_order_items(params ={})
         amazon_order_id = params[:amazon_order_id]
         
