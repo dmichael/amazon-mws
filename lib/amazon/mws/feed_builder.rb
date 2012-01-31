@@ -24,7 +24,7 @@ module Amazon
         @xml.AmazonEnvelope("xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance", "xsi:noNamespaceSchemaLocation"=>"amzn-envelope.xsd") do 
           render_header(@params)
           render_envelope(:message_type => @message_type)
-          @messages.each do |message|
+          @messages.each_line do |message|
             render_message(message, @params)
           end
         end
