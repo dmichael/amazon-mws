@@ -17,12 +17,12 @@ module Amazon
       def submit_flat_file_feed(records, purge_flag = false)
         header = "sku\tproduct-id\tproduct-id-type\tprice\titem-condition\tquantity\tadd-delete\twill-ship-internationally\texpedited-shipping\titem-note\tfulfillment-center-id"
         puts ([header] + records).join("\r")
-        response =
-          post("/", {
+        query_params = {
           "Action"          => "SubmitFeed", 
-          "FeedType"        => "_POST_FLAT_FILE_INVLOADER_DATA_",
-          "PurgeAndReplace" => purge_flag.to_s
-        }, ([header] + records).join("\r"))
+          "FeedType"        => "_POST_FLAT_FILE_INVLOADER_DATA_"}
+        query_params['PurgeAndReplace'] = 'true' if purge_flag
+        
+        response = post("/", query_params, ([header] + records).join("\r"))
         result = SubmitFeedResponse.format(response)
       end
       
