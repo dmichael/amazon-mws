@@ -4,7 +4,7 @@ class Amazon::MWS::Authentication
     def initialize(params = {})
       query_params = {
         'AWSAccessKeyId'   => params[:access_key],
-		'SellerId'         => params[:merchant_id],
+  	    'SellerId'         => params[:merchant_id],
         'SignatureMethod'  => Signature::METHOD,
         'SignatureVersion' => Signature::VERSION,
         'Timestamp'        => Time.now.iso8601,
