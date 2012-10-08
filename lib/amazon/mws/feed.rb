@@ -15,7 +15,7 @@ module Amazon
       # feed.
       
       def submit_flat_file_feed(records, purge_flag = false)
-        header = "sku\tproduct-id\tproduct-id-type\tprice\titem-condition\tquantity\tadd-delete\twill-ship-internationally\texpedited-shipping\titem-note\tfulfillment-center-id"
+        header = "sku\tproduct-id\tproduct-id-type\tprice\titem-condition\tquantity\tadd-delete\twill-ship-internationally\texpedited-shipping\titem-note\tfulfillment-center-id\tleadtime-to-ship"
         puts ([header] + records).join("\r")
         query_params = {
           "Action"          => "SubmitFeed", 
