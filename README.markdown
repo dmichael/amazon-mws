@@ -1,5 +1,7 @@
-Ruby library for Amazon Marketplace Web Service (MWS)
+Ruby library for Amazon MWS
 =====================================================
+
+[![Code Climate](https://codeclimate.com/github/dmichael/amazon-mws.png)](https://codeclimate.com/github/dmichael/amazon-mws)
 
 TODO
 ===========
