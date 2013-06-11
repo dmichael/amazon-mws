@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSpy v2010 rel. 2 (http://www.altova.com) by sunil sachdev (amazon.com) -->
+<!-- Revision="$Revision: #1 $" -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!--
+    $Date: 20011/07/26 $
+
+    AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
+    confidential and proprietary information of Amazon.com and may not be reproduced, 
+    distributed or used, in whole or in part, for any purpose other than as necessary 
+    to list products for sale on the www.amazon.com web site pursuant to an agreement 
+    with Amazon.com.
+    -->
+	<xsd:include schemaLocation="amzn-base.xsd"/>
+	<!--
+    Please read the corresponding documentation that contains the recommended values for elements
+    of type StringNotNull.
+    -->
+	<xsd:element name="LabSupplies">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="ProductType">
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element ref="LabSupply"/>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="LabSupply">
+		<xsd:complexType>
+			<xsd:sequence>
+					<xsd:element name="Parentage">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="parent"/>
+								<xsd:enumeration value="child"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="AgeRangeDescription"  type="HundredString" minOccurs="0" />
+					<xsd:element name="AirFlowCapacity"  type="Dimension" minOccurs="0" />
+					<xsd:element name="BulbDiameter" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="Capacity" type="VolumeDimension" minOccurs="0"/>
+					<xsd:element name="CapSize" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="CapType"  type="HundredString" minOccurs="0" />
+					<xsd:element name="ChamberDepth"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="ChamberHeight"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="ChamberMaterialType"  type="HundredString" minOccurs="0" />
+					<xsd:element name="ChamberVolume" type="VolumeAndVolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="ChamberWidth"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="ClosureDiameter"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="Co2Range"  type="HundredString" minOccurs="0" />
+					<xsd:element name="CompressorHorsepower"  type="HundredString" minOccurs="0" />
+					<xsd:element name="CoolantCapacity" type="VolumeDimension" minOccurs="0"/>
+					<xsd:element name="CoolantConsumptionRate" type="VolumeAndVolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="CountryOfOrigin"  type="CountryOfOriginType" minOccurs="0" />
+					<xsd:element name="CurrentRating"  type="CurrentDimension" minOccurs="0" />
+					<xsd:element name="DisplayType"  type="HundredString" minOccurs="0" />
+					<xsd:element name="DrawVolume" type="VolumeAndVolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="DropsPerMilliliter"  type="Dimension" minOccurs="0" />
+					<xsd:element name="DropVolume" type="VolumeDimension" minOccurs="0"/>
+					<xsd:element name="ExtensionLength" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="FuelType"  type="HundredString" minOccurs="0" />
+					<xsd:element name="GraduationInterval" type="GraduationInterval" minOccurs="0"/>
+					<xsd:element name="GraduationRange"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="HeatedElementDimensions"  type="HundredString" minOccurs="0" />
+					<xsd:element name="HeaterSurfaceMaterialType"  type="HundredString" minOccurs="0" />
+					<xsd:element name="HeatingElementType"  type="HundredString" minOccurs="0" />
+					<xsd:element name="HeatTime" type="TimeDimension" minOccurs="0"/>
+					<xsd:element name="HoldingTime" type="TimeDimension" minOccurs="0"/>
+					<xsd:element name="Horsepower"  type="Dimension" minOccurs="0" />
+					<xsd:element name="ImmersionDepth" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="InletConnectionType"  type="HundredString" minOccurs="0" />
+					<xsd:element name="InletOutsideDimensions"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="InsideDepth"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="InsideDiameterString"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="InsideHeightString"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="InsideLengthString"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="InsideWidthString"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="ItemDepth" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="ItemDiameter" type="LengthDimension" minOccurs="0" />
+					<xsd:element name="ItemShape"  type="HundredString" minOccurs="0" />
+					<xsd:element name="ItemThickness"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="ItemVolume" type="VolumeDimension" minOccurs="0"/>
+					<xsd:element name="LightPathDistance" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="LowerTemperatureRating"  type="TemperatureDimension" minOccurs="0" />
+					<xsd:element name="MarkingColor"  type="HundredString" minOccurs="0" />
+					<xsd:element name="MaterialType"  type="LongString" minOccurs="0" />
+					<xsd:element name="MaximumDiameter"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="MaximumDispensingVolume" type="VolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="MaximumEnergyOutput"  type="EnergyDimension" minOccurs="0" />
+					<xsd:element name="MaximumInletPressure" type="PressureDimension" minOccurs="0"/>
+					<xsd:element name="MaximumRelativeCentrifugalForce" type="ForceDimension" minOccurs="0"/>
+					<xsd:element name="MaximumSampleVolume"  type="VolumeRateDimension" minOccurs="0" />
+					<xsd:element name="MaximumSpeed"  type="SpeedDimension" minOccurs="0" />
+					<xsd:element name="MaximumStirringSpeed"  type="SpeedDimension" minOccurs="0" />
+					<xsd:element name="MaximumStirringVolume" type="VolumeAndVolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="MaximumTemperature"  type="TemperatureDimension" minOccurs="0" />
+					<xsd:element name="MaximumWorkingVolume" type="VolumeAndVolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="MediaColor"  type="HundredString" minOccurs="0" />
+					<xsd:element name="MediaType"  type="String" minOccurs="0" />
+					<xsd:element name="MinimumDispensingVolume" type="VolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="MinimumEnergyOutput"  type="EnergyDimension" minOccurs="0" />
+					<xsd:element name="MinimumInletWaterTemperature"  type="TemperatureDimension" minOccurs="0" />
+					<xsd:element name="MinimumSampleVolume" type="VolumeAndVolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="MinimumSpeed"  type="SpeedDimension" minOccurs="0" />
+					<xsd:element name="MinimumStirringSpeed"  type="SpeedDimension" minOccurs="0" />
+					<xsd:element name="MinimumWorkingVolume" type="VolumeAndVolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="NarrowEndDiameter"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="NeckDiameter"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="NumberOfChannels"  type="PositiveInteger" minOccurs="0" />
+					<xsd:element name="NumberOfHeaters"  type="PositiveInteger" minOccurs="0" />
+					<xsd:element name="NumberOfRacks"  type="PositiveInteger" minOccurs="0" />
+					<xsd:element name="NumberOfShelves"  type="HundredString" minOccurs="0" />
+					<xsd:element name="NumberOfTrays"  type="PositiveInteger" minOccurs="0" />
+					<xsd:element name="NumberOfTubes"  type="PositiveInteger" minOccurs="0" />
+					<xsd:element name="NumberOfWells"  type="PositiveInteger" minOccurs="0" />
+					<xsd:element name="NumberOfWindows"  type="PositiveInteger" minOccurs="0" />
+					<xsd:element name="NumberOfZones"  type="PositiveInteger" minOccurs="0" />
+					<xsd:element name="OperatingFrequency" type="FrequencyDimension" minOccurs="0"/>
+					<xsd:element name="OperatingPressure" type="PressureDimension" minOccurs="0"/>
+					<xsd:element name="OrbitLength" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="OutputCapacity" type="VolumeDimension" minOccurs="0"/>
+					<xsd:element name="OutsideDiameter"  type="LengthDimension" minOccurs="0" />
+					<xsd:element name="PlateArea"  type="HundredString" minOccurs="0" />
+					<xsd:element name="PlateOutsideDiameter" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="PoreSize" type="VolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="PressureFlowRate" type="VolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="ProductGrade"  type="HundredString" minOccurs="0" />
+					<xsd:element name="PurificationMethod"  type="HundredString" minOccurs="0" />
+					<xsd:element name="ReadoutAccuracy"  type="HundredString" minOccurs="0" />
+					<xsd:element name="RecoveryPercentage"  type="Dimension" minOccurs="0" />
+					<xsd:element name="ReservoirCapacity" type="VolumeDimension" minOccurs="0"/>
+					<xsd:element name="SampleVolume" type="VolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="SeptaType"  type="HundredString" minOccurs="0" />
+					<xsd:element name="ShakingSpeed"  type="SpeedDimension" minOccurs="0" />
+					<xsd:element name="StemOutsideDiameter" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="StopperNumber"  type="HundredString" minOccurs="0" />
+					<xsd:element name="SuctionFlowRate" type="VolumeRateDimension" minOccurs="0"/>
+					<xsd:element name="SupportedMediaSize"  type="HundredString" minOccurs="0" />
+					<xsd:element name="TemperatureAccuracy"  type="HundredString" minOccurs="0" />
+					<xsd:element name="TemperatureControlPrecision"  type="HundredString" minOccurs="0" />
+					<xsd:element name="TemperatureRange"  type="TemperatureDimension" minOccurs="0" />
+					<xsd:element name="TemperatureRecovery" type="TimeDimension" minOccurs="0"/>
+					<xsd:element name="TemperatureStability"  type="HundredString" minOccurs="0" />
+					<xsd:element name="TemperatureUniformity"  type="TemperatureDimension" minOccurs="0" />
+					<xsd:element name="TimerRange" type="TimeDimension" minOccurs="0"/>
+					<xsd:element name="TubeCapacity" type="VolumeDimension" minOccurs="0"/>
+					<xsd:element name="TubeSize" type="LengthDimension" minOccurs="0"/>
+					<xsd:element name="UpperTemperatureRating"  type="TemperatureDimension" minOccurs="0" />
+					<xsd:element name="VolumeAccuracy"  type="VolumeRateDimension" minOccurs="0" />
+					<xsd:element name="VolumePrecision"  type="HundredString" minOccurs="0" />
+					<xsd:element name="VolumeTolerance"  type="VolumeRateDimension" minOccurs="0" />
+					<xsd:element name="VolumetricToleranceClass"  type="HundredString" minOccurs="0" />
+					<xsd:element name="WaterRemovalCapacity" type="VolumeDimension" minOccurs="0"/>
+					<xsd:element name="Wattage"  type="SixDigitDecimalFractionOne" minOccurs="0" />
+					<xsd:element name="WellShape"  type="HundredString" minOccurs="0" />
+					<xsd:element name="WellVolume" type="VolumeDimension" minOccurs="0"/>
+					<xsd:element name="WideEndDiameter"  type="LengthDimension" minOccurs="0" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!--
+	###############################################################
+	# LabSupplies Data Types
+	###############################################################
+	-->	
+	<xsd:complexType name="EnergyDimension">
+		<xsd:simpleContent>
+			<xsd:extension base="Dimension">
+					<xsd:attribute name="unitOfMeasure" type="EnergyUnitOfMeasure" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -18,6 +18,55 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 						</xsd:choice>
 					</xsd:complexType>
 				</xsd:element>
+				<xsd:element name="Axis" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="BatteryAverageLife" type="PositiveNonZeroDimension" minOccurs="0"/>
+				<xsd:element name="BatteryCellComposition" type="BatteryCellTypeValues" minOccurs="0"/>				
+				<xsd:element name="BatteryAverageLifeStandby" type="PositiveNonZeroDimension" minOccurs="0"/>
+				<xsd:element name="BatteryChargeTime" type="PositiveNonZeroDimension" minOccurs="0"/>
+				<xsd:element name="BatteryTypeLithiumIon" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="BatteryTypeLithiumMetal" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="BatteryDescription" type="StringNotNull" minOccurs="0"/>	
+				<xsd:element name="BatteryFormFactor" type="StringNotNull" minOccurs="0"/>	
+				<xsd:element name="BatteryPower" type="BatteryPowerIntegerDimension" minOccurs="0"/>
+				<xsd:element name="CountryOfOrigin" type="CountryOfOriginType" minOccurs="0"/>
+				<xsd:element name="Cylinder" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="ItemDiameterString" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="FcShelfLife" type="DateIntegerDimension" minOccurs="0"/>
+				<xsd:element name="LensAdditionPower" type="UnknownOpticalDimension" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryEnergyContent" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryPackaging" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="batteries_contained_in_equipment"/>
+							<xsd:enumeration value="batteries_only"/>
+							<xsd:enumeration value="batteries_packed_with_equipment"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="LithiumBatteryVoltage" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryWeight" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="MfrWarrantyDescriptionLabor" type="SuperLongStringNotNull"
+					minOccurs="0"/>
+				<xsd:element name="MfrWarrantyDescriptionParts" type="SuperLongStringNotNull"
+					minOccurs="0"/>
+				<xsd:element name="IncludedComponents" type="StringNotNull" minOccurs="0"
+					maxOccurs="3"/>					
+				<xsd:element name="ManufacturerWarrantyType" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="ModelNumber" type="FortyStringNotNull" minOccurs="0"/>		
+				<xsd:element name="SpecificUsesForProduct" type="StringNotNull" minOccurs="0"  maxOccurs="2"/>
+				<xsd:element name="Wattage" type="WattageDimension" minOccurs="0"/>
+				<xsd:element name="Voltage" type="VoltageDecimalDimension" minOccurs="0"/>	
+				<xsd:element name="NumberOfPieces" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="PlugType" type="HundredString" minOccurs="0"/>
+				<xsd:element name="HarmonizedCode" type="HundredString" minOccurs="0"/>						
+				<xsd:element name="NumberOfLithiumIonCells" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="NumberOfLithiumMetalCells" type="xsd:positiveInteger"
+					minOccurs="0"/>
+				<xsd:element name="RegionOfOrigin" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="SellerWarrantyDescription" type="SuperLongStringNotNull"
+					minOccurs="0"/>
+				<xsd:element name="WeightRecommendation" type="WeightRecommendationType"
+					minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -47,13 +96,29 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 										<xsd:enumeration value="Flavor-Count"/>
 										<xsd:enumeration value="Flavor-Size"/>
 										<xsd:enumeration value="Size-Scent"/>
-									</xsd:restriction>
+										<xsd:enumeration value="Size-UnitCount"/>
+										<xsd:enumeration value="CustomerPackageType"/>
+										<xsd:enumeration value="ColorName-CustomerPackageType"/>
+										<xsd:enumeration value="SizeName-CustomerPackageType"/>
+										<xsd:enumeration
+											value="SizeName-ColorName-CustomerPackageType"/>
+										<xsd:enumeration value="StyleName-CustomerPackageType"/>
+										<xsd:enumeration value="SizeName-StyleName-CustomerPackageType"/>
+										<xsd:enumeration
+											value="Opticalpower-Basecurveradius-Itemdiameterstring-Cylindercorrection-Cylinderaxis-unitcount"/>
+										<xsd:enumeration
+											value="Opticalpower-Basecurveradius-Itemdiameterstring-Lensadditionpower-Unitcount"/>
+										<xsd:enumeration
+											value="Opticalpower-Basecurveradius-Itemdiameterstring-Unitcount"/>
+									</xsd:restriction>									
 								</xsd:simpleType>
 							</xsd:element>
 							<xsd:element name="Size" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="SizeMap" type="StringNotNull" minOccurs="0"/>
 							<xsd:element name="Color" type="StringNotNull" minOccurs="0"/>
-							<xsd:element ref="ColorMap" minOccurs="0"/>
-							<!-- Count represents the number of individually packaged items (a.k.a. 
+							<xsd:element name="ColorMap" type="StringNotNull" minOccurs="0"/>
+							<!-- <xsd:element ref="ColorMap" minOccurs="0"/>
+							Count represents the number of individually packaged items (a.k.a. 
 							units) included, such that each item is the smallest unit with a 
 							scannable bar code (UPC / EAN), and each item is packaged for 
 							individual sale.  For example, a box of 12 health bars, each
@@ -64,20 +129,44 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 							a bottle of 100 aspirin tablets would have a NumberOfItems of 100.  
 							A box of 10 individually packaged bottles, each with 20 tablets, would 
 							have a Count of 10 and a NumberOfItems of 200.  -->
-							<xsd:element name="NumberOfItems" type="xsd:positiveInteger" minOccurs="0"/>
+							<xsd:element name="NumberOfItems" type="xsd:positiveInteger"
+								minOccurs="0"/>
 							<xsd:element name="Flavor" type="StringNotNull" minOccurs="0"/>
 							<xsd:element name="Scent" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="StyleName" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="CustomerPackageType" type="StringNotNull"
+								minOccurs="0"/>
 						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="CanShipInOriginalContainer" type="xsd:boolean" minOccurs="0"/>
+				<xsd:element name="IdentityPackageType" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="StringNotNull">
+							<xsd:enumeration value="bulk"/>
+							<xsd:enumeration value="frustration_free"/>
+							<xsd:enumeration value="traditional"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="UnitCount" minOccurs="0">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="xsd:positiveInteger">
+								<xsd:attribute name="unitOfMeasure" type="StringNotNull"
+									use="required"/>
+							</xsd:extension>
+						</xsd:simpleContent>
 					</xsd:complexType>
 				</xsd:element>
 				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
 				<xsd:element name="DisplayVolume" type="VolumeDimension" minOccurs="0"/>
 				<xsd:element name="Indications" type="LongStringNotNull" minOccurs="0"/>
-				<xsd:element name="HairType" type="LongStringNotNull" minOccurs="0" maxOccurs="5">
-				</xsd:element>
+				<xsd:element name="HairType" type="LongStringNotNull" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="SkinType" type="LongStringNotNull" minOccurs="0" maxOccurs="5"/>
-				<xsd:element name="SkinTone" minOccurs="0" maxOccurs="5">
+				<xsd:element name="SkinTone" type="StringNotNull" minOccurs="0" maxOccurs="5"/>
+				<!--<xsd:element name="SkinTone" minOccurs="0" maxOccurs="5">
 					<xsd:simpleType>
 						<xsd:restriction base="StringNotNull">
 							<xsd:enumeration value="Dark"/>
@@ -88,9 +177,10 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 							<xsd:enumeration value="VeryFair"/>
 						</xsd:restriction>
 					</xsd:simpleType>
-				</xsd:element>
+				</xsd:element> -->
 				<xsd:element name="Ingredients" type="LongStringNotNull" minOccurs="0" maxOccurs="3"/>
-				<xsd:element name="MaterialType" type="LongStringNotNull" minOccurs="0" maxOccurs="3"/>
+				<xsd:element name="MaterialType" type="LongStringNotNull" minOccurs="0"
+					maxOccurs="3"/>
 				<xsd:element name="Directions" type="LongStringNotNull" minOccurs="0"/>
 				<xsd:element name="Warnings" type="LongStringNotNull" minOccurs="0"/>
 				<xsd:element name="ItemForm" type="String" minOccurs="0"/>
@@ -98,6 +188,10 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 				<xsd:element name="FinishType" type="String" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="ItemSpecialty" type="String" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="IsAdultProduct" type="xsd:boolean" minOccurs="0"/>
+				<xsd:element name="SpecialFeatures" type="String" minOccurs="0" maxOccurs="3"/>
+				<xsd:element name="SpecificUsedKeywords" type="String" minOccurs="0" maxOccurs="2"/>				
+				<xsd:element name="SunProtection" type="SunProtectionDimension" minOccurs="0"/>				
+				<xsd:element name="TargetAudience" type="String" minOccurs="0"/>
 				<xsd:element name="TargetGender" minOccurs="0">
 					<xsd:simpleType>
 						<xsd:restriction base="xsd:string">
@@ -107,6 +201,18 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 						</xsd:restriction>
 					</xsd:simpleType>
 				</xsd:element>
+				<xsd:element name="LensType" type="String" minOccurs="0"/>
+				<xsd:element name="LifeExpectancy" type="DateIntegerDimension" minOccurs="0"/>
+				<xsd:element name="OccasionType" type="MediumStringNotNull" minOccurs="0"/>				
+				<xsd:element name="ItemDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="OpticalPower" type="UnknownOpticalDimension" minOccurs="0"/>
+				<xsd:element name="BaseCurveRadius" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="CIPCode" type="String" minOccurs="0"/>
+				<xsd:element name="Pattern" type="String" minOccurs="0"/>
+				<xsd:element name="PowerSource" type="FortyStringNotNull" minOccurs="0"/>
+				<xsd:element name="IsACAdapterIncluded" type="xsd:boolean" minOccurs="0"/>
+				<xsd:element ref="Battery" minOccurs="0"/>
+				<xsd:element name="IsExpirationDatedProduct" type="xsd:boolean" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -131,26 +237,49 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 										<xsd:enumeration value="Color"/>
 										<xsd:enumeration value="Count"/>
 										<xsd:enumeration value="Size-Color"/>
+										<xsd:enumeration value="Size-UnitCount"/>
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
 							<xsd:element name="Size" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="SizeMap" type="StringNotNull" minOccurs="0"/>
 							<xsd:element name="Color" type="StringNotNull" minOccurs="0"/>
-							<xsd:element ref="ColorMap" minOccurs="0"/>
-							<!-- Count represents the number of individually packaged items (a.k.a. 
+							<xsd:element name="ColorMap" type="StringNotNull" minOccurs="0"/>
+							<!--<xsd:element ref="ColorMap" minOccurs="0"/>
+							 Count represents the number of individually packaged items (a.k.a. 
 							units) included, such that each item is the smallest unit with a 
 							scannable bar code (UPC / EAN), and each item is packaged for 
 							individual sale.  For example, a box of 12 health bars, each
 							of which can be sold individually, would have a Count of 12. -->
 							<xsd:element name="Count" type="xsd:positiveInteger" minOccurs="0"/>
+							<!-- NumberOfItems represents the number of discrete items included, 
+							such that the items are not packaged for individual sale.  For example, 
+							a bottle of 100 aspirin tablets would have a NumberOfItems of 100.  
+							A box of 10 individually packaged bottles, each with 20 tablets, would 
+							have a Count of 10 and a NumberOfItems of 200.  -->
+							<xsd:element name="NumberOfItems" type="xsd:positiveInteger"
+								minOccurs="0"/>
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="Indications" type="LongStringNotNull" minOccurs="0"/>
-				<xsd:element name="HairType" type="LongStringNotNull" minOccurs="0" maxOccurs="5">
+				<xsd:element name="UnitCount" minOccurs="0">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="xsd:positiveInteger">
+								<xsd:attribute name="unitOfMeasure" type="StringNotNull"
+									use="required"/>
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
 				</xsd:element>
+				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
+				<xsd:element name="DisplayVolume" type="VolumeDimension" minOccurs="0"/>
+				<xsd:element name="Indications" type="LongStringNotNull" minOccurs="0"/>
+				<xsd:element name="HairType" type="LongStringNotNull" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="SkinType" type="LongStringNotNull" minOccurs="0" maxOccurs="5"/>
-				<xsd:element name="SkinTone" minOccurs="0" maxOccurs="5">
+				<xsd:element name="SkinTone" type="StringNotNull" minOccurs="0" maxOccurs="5"/>
+				<!--<xsd:element name="SkinTone" minOccurs="0" maxOccurs="5">
 					<xsd:simpleType>
 						<xsd:restriction base="StringNotNull">
 							<xsd:enumeration value="Dark"/>
@@ -161,8 +290,9 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 							<xsd:enumeration value="VeryFair"/>
 						</xsd:restriction>
 					</xsd:simpleType>
-				</xsd:element>
-				<xsd:element name="MaterialType" type="LongStringNotNull" minOccurs="0" maxOccurs="3"/>
+				</xsd:element> -->
+				<xsd:element name="MaterialType" type="LongStringNotNull" minOccurs="0"
+					maxOccurs="3"/>
 				<xsd:element name="Directions" type="LongStringNotNull" minOccurs="0"/>
 				<xsd:element name="Warnings" type="LongStringNotNull" minOccurs="0"/>
 				<xsd:element name="ItemForm" type="String" minOccurs="0"/>
@@ -170,6 +300,7 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 				<xsd:element name="Coverage" type="String" minOccurs="0"/>
 				<xsd:element name="FinishType" type="String" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="ItemSpecialty" type="String" minOccurs="0" maxOccurs="5"/>
+				<xsd:element name="ItemPackageQuantity" type="PositiveInteger" default="1" minOccurs="0"/>
 				<xsd:element name="IsAdultProduct" type="xsd:boolean" minOccurs="0"/>
 				<xsd:element name="TargetGender" minOccurs="0">
 					<xsd:simpleType>
@@ -180,10 +311,25 @@ confidential and proprietary information of Amazon.com and may not be reproduced
 						</xsd:restriction>
 					</xsd:simpleType>
 				</xsd:element>
+				<xsd:element name="ItemDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="Pattern" type="String" minOccurs="0"/>
 				<xsd:element name="PowerSource" type="FortyStringNotNull" minOccurs="0"/>
 				<xsd:element name="IsACAdapterIncluded" type="xsd:boolean" minOccurs="0"/>
 				<xsd:element ref="Battery" minOccurs="0"/>
+				<xsd:element name="IsExpirationDatedProduct" type="xsd:boolean" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:simpleType name="UnknownOpticalUnitOfMeasure">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="unknown_modifier"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="UnknownOpticalDimension">
+		<xsd:simpleContent>
+			<xsd:extension base="Dimension">
+				<xsd:attribute name="unitOfMeasure" type="UnknownOpticalUnitOfMeasure" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
 </xsd:schema>
