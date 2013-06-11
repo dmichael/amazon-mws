@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<!-- Revision="$Revision: #1 $" -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!--
+    $Date: 2007/06/28 $
+
+    AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
+    confidential and proprietary information of Amazon.com and may not be reproduced, 
+    distributed or used, in whole or in part, for any purpose other than as necessary 
+    to list products for sale on the www.amazon.com web site pursuant to an agreement 
+    with Amazon.com.
+    -->
+	<xsd:include schemaLocation="amzn-base.xsd"/>
+	<!--
+    Please read the corresponding documentation that contains the recommended values for elements
+    of type StringNotNull.
+    -->
+	<xsd:element name="Lighting">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="ProductType">
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element ref="LightsAndFixtures"/>
+							<xsd:element ref="LightingAccessories"/>
+							<xsd:element ref="LightBulbs"/>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="BatteryCellComposition" type="BatteryCellTypeValues" minOccurs="0"/>
+				<xsd:element name="ManufacturerWarrantyDescription" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:normalizedString">
+							<xsd:maxLength value="1500"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="ManufacturerSafetyWarning" type="String" minOccurs="0"/>
+				<xsd:element name="SellerWarrantyDescription" type="SuperLongStringNotNull" minOccurs="0"/>
+				<xsd:element name="WarrantyType" type="String" minOccurs="0"/>
+				<xsd:element name="WeeeTaxValue" type="CurencyDimension" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="LightsAndFixtures">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="VariationData" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Parentage">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="parent"/>
+										<xsd:enumeration value="child"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="VariationTheme" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="Color"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="AirFlowCapacity" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="BaseDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element ref="Battery" minOccurs="0"/>
+				<xsd:element name="BulbDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="BulbLength" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="BulbLifeSpan" type="TimeDimension" minOccurs="0"/>
+				<xsd:element name="BulbPowerFactor" type="Dimension" minOccurs="0"/>
+				<xsd:element name="BulbSpecialFeatures" type="String" minOccurs="0" maxOccurs="5"/>
+				<xsd:element name="BulbSwitchingCycles" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="BulbType" type="String" minOccurs="0"/>
+				<xsd:element name="BulbWattage" type="Dimension" minOccurs="0"/>
+				<xsd:element name="CapType" type="String" minOccurs="0"/>
+				<xsd:element name="Certification" type="String" minOccurs="0" maxOccurs="4"/>
+				<xsd:element name="Collection" type="String" minOccurs="0"/>
+				<xsd:element name="Color" type="String" minOccurs="0"/>
+				<xsd:element name="ColorMap" type="String" minOccurs="0"/>
+				<xsd:element name="ColorRenderingIndex" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="ColorTemperature" type="TemperatureRatingDimension" minOccurs="0"/>
+				<xsd:element name="CountryOfOrigin" type="CountryOfOriginType" minOccurs="0"/>
+				<xsd:element name="DisplayDepth" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayHeight" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
+				<xsd:element name="DisplayWidth" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="EnergyEfficiencyRating" type="String" minOccurs="0"/>
+				<xsd:element name="FanBladeColor" type="String" minOccurs="0"/>
+				<xsd:element name="FinishType" type="String" minOccurs="0"/>
+				<xsd:element name="IncandescentEquivalentWattage" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="IncludedComponent" type="String" minOccurs="0" maxOccurs="5"/>
+				<xsd:element name="InternationalProtectionRating" type="String" minOccurs="0"/>
+				<xsd:element name="ItemDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="LampStartupTime" type="MediumStringNotNull" minOccurs="0"/>
+				<xsd:element name="LampWarmupTime" type="MediumStringNotNull" minOccurs="0"/>
+				<xsd:element name="LightingMethod" type="String" minOccurs="0"/>
+				<xsd:element name="LightOutputLuminance" type="LuminanceDimension" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryEnergyContent" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryPackaging" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="batteries_contained_in_equipment"/>
+							<xsd:enumeration value="batteries_only"/>
+							<xsd:enumeration value="batteries_packed_with_equipment"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="LithiumBatteryVoltage" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryWeight" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="LumenMaintenanceFactor" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="LuminousIntensity" type="LuminiousIntensityDimension" minOccurs="0"/>
+				<xsd:element name="Material" type="String" minOccurs="0"/>
+				<xsd:element name="MaximumCurrent" type="AmperageDimension" minOccurs="0"/>
+				<xsd:element name="MaximumSupportedWattage" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="MercuryContent" type="WeightDimension" minOccurs="0"/>
+				<xsd:element name="NumberOfBlades" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="NumberOfBulbSockets" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="NumberOfLights" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="NumberOfLithiumIonCells" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="NumberOfLithiumMetalCells" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="PlugType" type="HundredString" minOccurs="0"/>
+				<xsd:element name="PowerSource" type="HundredString" minOccurs="0"/>
+				<xsd:element name="PPUCount" type="Dimension" minOccurs="0"/>
+				<xsd:element name="PPUCountType" type="String" minOccurs="0"/>
+				<xsd:element name="ShadeColor" type="String" minOccurs="0"/>
+				<xsd:element name="ShadeDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="ShadeMaterial" type="String" minOccurs="0"/>
+				<xsd:element name="SpecialFeatures" type="String" minOccurs="0" maxOccurs="5"/>
+				<xsd:element name="SpecificUses" type="String" minOccurs="0" maxOccurs="2"/>
+				<xsd:element name="StyleName" type="String" minOccurs="0"/>
+				<xsd:element name="SwitchStyle" type="String" minOccurs="0"/>
+				<xsd:element name="Voltage" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="Volume" type="VolumeDimension" minOccurs="0"/>
+				<xsd:element name="Wattage" type="Dimension" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="LightingAccessories">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="BaseDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element ref="Battery" minOccurs="0"/>
+				<xsd:element name="CircuitBreakerInstallationType" type="String" minOccurs="0"/>
+				<xsd:element name="CircuitBreakerType" type="String" minOccurs="0"/>
+				<xsd:element name="Color" type="String" minOccurs="0"/>
+				<xsd:element name="ColorMap" type="String" minOccurs="0"/>
+				<xsd:element name="CountryOfOrigin" type="CountryOfOriginType" minOccurs="0"/>
+				<xsd:element name="DisplayDepth" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayHeight" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
+				<xsd:element name="DisplayWidth" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="IncludedComponent" type="String" minOccurs="0" maxOccurs="5"/>
+				<xsd:element name="ItemDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="MaximumCurrent" type="AmperageDimension" minOccurs="0"/>
+				<xsd:element name="NumberOfStrands" type="String" minOccurs="0"/>
+				<xsd:element name="PlugInstallationType" type="String" minOccurs="0"/>
+				<xsd:element name="PlugType" type="HundredString" minOccurs="0"/>
+				<xsd:element name="PowerSource" type="HundredString" minOccurs="0"/>
+				<xsd:element name="SpecificUses" type="String" minOccurs="0"/>
+				<xsd:element name="StrandDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="SwitchStyle" type="String" minOccurs="0"/>
+				<xsd:element name="SwitchType" type="String" minOccurs="0"/>
+				<xsd:element name="Voltage" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="Volume" type="VolumeDimension" minOccurs="0"/>
+				<xsd:element name="Wattage" type="Dimension" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="LightBulbs">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="VariationData" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Parentage">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="parent"/>
+										<xsd:enumeration value="child"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="VariationTheme" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="Wattage"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="Battery" minOccurs="0"/>
+				<xsd:element name="BeamAngle" type="DegreeDimension" minOccurs="0"/>
+				<xsd:element name="BulbDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="BulbLength" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="BulbLifeSpan" type="TimeDimension" minOccurs="0"/>
+				<xsd:element name="BulbPowerFactor" type="Dimension" minOccurs="0"/>
+				<xsd:element name="BulbSpecialFeatures" type="String" minOccurs="0" maxOccurs="5"/>
+				<xsd:element name="BulbSwitchingCycles" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="BulbType" type="String" minOccurs="0"/>
+				<xsd:element name="BulbWattage" type="Dimension" minOccurs="0"/>
+				<xsd:element name="CapType" type="String" minOccurs="0"/>
+				<xsd:element name="Certification" type="String" minOccurs="0" maxOccurs="4"/>
+				<xsd:element name="Color" type="String" minOccurs="0"/>
+				<xsd:element name="ColorMap" type="String" minOccurs="0"/>
+				<xsd:element name="ColorRenderingIndex" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="ColorTemperature" type="TemperatureRatingDimension" minOccurs="0"/>
+				<xsd:element name="CountryOfOrigin" type="CountryOfOriginType" minOccurs="0"/>
+				<xsd:element name="DisplayDepth" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayDiameter" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayHeight" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
+				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
+				<xsd:element name="DisplayWidth" type="LengthDimension" minOccurs="0"/>				
+				<xsd:element name="EnergyEfficiencyRating" type="String" minOccurs="0"/>
+				<xsd:element name="IncandescentEquivalentWattage" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="ItemShape" type="String" minOccurs="0"/>
+				<xsd:element name="LampStartupTime" type="MediumStringNotNull" minOccurs="0"/>
+				<xsd:element name="LampWarmupTime" type="MediumStringNotNull" minOccurs="0"/>
+				<xsd:element name="LightOutputLuminance" type="LuminanceDimension" minOccurs="0"/>
+				<xsd:element name="LumenMaintenanceFactor" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="LuminousIntensity" type="LuminiousIntensityDimension" minOccurs="0"/>
+				<xsd:element name="MercuryContent" type="WeightDimension" minOccurs="0"/>
+				<xsd:element name="PPUCount" type="Dimension" minOccurs="0"/>
+				<xsd:element name="PPUCountType" type="String" minOccurs="0"/>
+				<xsd:element name="SpecificUses" type="String" minOccurs="0" maxOccurs="2"/>
+				<xsd:element name="Voltage" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="Volume" type="VolumeDimension" minOccurs="0"/>
+				<xsd:element name="Wattage" type="Dimension" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

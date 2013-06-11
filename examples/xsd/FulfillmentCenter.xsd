@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!-- Revision="$Revision: #2 $" -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <!--
+    $Date: 2005/04/01 $
+
+    AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
+    confidential and proprietary information of Amazon.com and may not be reproduced, 
+    distributed or used, in whole or in part, for any purpose other than as necessary 
+    to list products for sale on the www.amazon.com web site pursuant to an agreement 
+    with Amazon.com.
+    -->
+
+    <xsd:include schemaLocation="amzn-base.xsd"/>
+
+    <xsd:element name="FulfillmentCenter">
+        <xsd:complexType>
+            <xsd:sequence>
+
+                <xsd:element ref="FulfillmentCenterID"/>
+                <xsd:element name="SupportsInStorePickup" type="xsd:boolean"/>
+
+                <xsd:element name="OperatingHours">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Monday" type="OperatingHoursBase" minOccurs="0"/>
+                            <xsd:element name="Tuesday" type="OperatingHoursBase" minOccurs="0"/>
+                            <xsd:element name="Wednesday" type="OperatingHoursBase" minOccurs="0"/>
+                            <xsd:element name="Thursday" type="OperatingHoursBase" minOccurs="0"/>
+                            <xsd:element name="Friday" type="OperatingHoursBase" minOccurs="0"/>
+                            <xsd:element name="Saturday" type="OperatingHoursBase" minOccurs="0"/>
+                            <xsd:element name="Sunday" type="OperatingHoursBase" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!--
+         ##################################################
+         # Operating hours base type
+         ##################################################
+	-->
+
+    <xsd:complexType name="OperatingHoursBase">
+        <xsd:sequence>
+            <xsd:element name="Open" type="xsd:time"/>
+            <xsd:element name="Close" type="xsd:time"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>
+

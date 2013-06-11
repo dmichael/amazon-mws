@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<!-- Revision="$Revision: #3 $" -->
+<!-- Revision="$Revision: #C_1 $" -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<!--
-    $Date: 2005/04/01 $
+    $Date: 2012/03/22 $
     AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
     confidential and proprietary information of Amazon.com and may not be reproduced, 
     distributed or used, in whole or in part, for any purpose other than as necessary 
@@ -20,6 +20,28 @@
 						</xsd:choice>
 					</xsd:complexType>
 				</xsd:element>
+				<xsd:element name="BatteryTypeLithiumIon" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="BatteryTypeLithiumMetal" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryEnergyContent" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryPackaging" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="batteries_contained_in_equipment"/>
+							<xsd:enumeration value="batteries_only"/>
+							<xsd:enumeration value="batteries_packed_with_equipment"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="LithiumBatteryVoltage" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryWeight" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="NumberOfLithiumIonCells" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="NumberOfLithiumMetalCells" type="xsd:positiveInteger"
+					minOccurs="0"/>
+				<xsd:element name="PlugType" type="HundredString" minOccurs="0"/>
+				<xsd:element name="SpecificUsesForProduct" type="StringNotNull" minOccurs="0"  maxOccurs="2"/>
+				<xsd:element name="SunProtection" type="SunProtectionDimension" minOccurs="0"/>		
+				<xsd:element name="Voltage" type="VoltageDecimalDimension" minOccurs="0"/>
+				<xsd:element name="Wattage" type="WattageDimension" minOccurs="0"/>					
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -41,11 +63,13 @@
 								<xsd:simpleType>
 									<xsd:restriction base="xsd:string">
 										<xsd:enumeration value="Size"/>
+										<xsd:enumeration value="Capacity"/>
 										<xsd:enumeration value="Color"/>
 										<xsd:enumeration value="Size-Color"/>
 										<xsd:enumeration value="Scent"/>
 										<xsd:enumeration value="Size-Scent"/>
 										<xsd:enumeration value="PatternName"/>
+										<xsd:enumeration value="Size-UnitCount"/>
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
@@ -53,7 +77,18 @@
 							<xsd:element name="Color" type="StringNotNull" minOccurs="0"/>
 							<xsd:element name="ColorMap" type="StringNotNull" minOccurs="0"/>
 							<xsd:element name="Scent" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="Capacity" type="VolumeDimension" minOccurs="0"/>
 						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="UnitCount" minOccurs="0">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="xsd:positiveInteger">
+								<xsd:attribute name="unitOfMeasure" type="StringNotNull"
+									use="required"/>
+							</xsd:extension>
+						</xsd:simpleContent>
 					</xsd:complexType>
 				</xsd:element>
 				<!-- Count represents the number of individually packaged items (a.k.a. 
@@ -67,13 +102,22 @@
 							a bag of 100 cotton balls would have a NumberOfItems of 100.  
 							A box of 10 individually packaged bags, each with 100 cotton balls, would 
 							have a Count of 10 and a NumberOfItems of 1000.  -->
-				<xsd:element name="NumberOfItems" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="NumberOfItems" type="xsd:positiveInteger" minOccurs="0"/>							
+				<xsd:element name="BatteryAverageLife" type="PositiveNonZeroDimension" minOccurs="0"/>
+				<xsd:element name="BatteryCellComposition" type="BatteryCellTypeValues" minOccurs="0"/>								
+				<xsd:element name="BatteryAverageLifeStandby" type="PositiveNonZeroDimension"
+					minOccurs="0"/>
+				<xsd:element name="BatteryChargeTime" type="PositiveNonZeroDimension" minOccurs="0"/>
+				<xsd:element name="BatteryDescription" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="BatteryFormFactor" type="StringNotNull" minOccurs="0"/>	
+				<xsd:element name="BatteryPower" type="BatteryPowerIntegerDimension" minOccurs="0"/>				
 				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
 				<xsd:element name="DisplayVolume" type="VolumeDimension" minOccurs="0"/>
 				<xsd:element name="SkinType" type="String" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="SkinTone" type="StringNotNull" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="HairType" type="String" minOccurs="0" maxOccurs="5"/>
+				<xsd:element name="IncludedComponents" type="StringNotNull" minOccurs="0"/>
 				<xsd:element name="Ingredients" minOccurs="0">
 					<xsd:simpleType>
 						<xsd:restriction base="xsd:normalizedString">
@@ -81,16 +125,24 @@
 						</xsd:restriction>
 					</xsd:simpleType>
 				</xsd:element>
-				<xsd:element name="MaterialType" type="LongStringNotNull" minOccurs="0" maxOccurs="3"/>
+				<xsd:element name="ManufacturerWarrantyType" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="MaterialType" type="LongStringNotNull" minOccurs="0"
+					maxOccurs="3"/>
+				<xsd:element name="MfrWarrantyDescriptionLabor" type="SuperLongStringNotNull"
+					minOccurs="0"/>
+				<xsd:element name="MfrWarrantyDescriptionParts" type="SuperLongStringNotNull"
+					minOccurs="0"/>
 				<xsd:element name="Indications" type="LongStringNotNull" minOccurs="0"/>
 				<xsd:element name="Directions" type="LongStringNotNull" minOccurs="0"/>
 				<xsd:element name="Warnings" type="LongStringNotNull" minOccurs="0"/>
 				<xsd:element name="ItemForm" type="String" minOccurs="0"/>
+				<xsd:element name="ItemPackageQuantity" type="PositiveInteger" default="1" minOccurs="0"/>
 				<xsd:element name="Flavor" type="StringNotNull" minOccurs="0"/>
 				<xsd:element name="Coverage" type="String" minOccurs="0"/>
 				<xsd:element name="FinishType" type="String" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="ItemSpecialty" type="String" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="PatternName" type="String" minOccurs="0"/>
+				<xsd:element name="PowerSource" type="StringNotNull" minOccurs="0"/>
 				<xsd:element name="IsAdultProduct" type="xsd:boolean" minOccurs="0"/>
 				<xsd:element name="TargetGender" minOccurs="0">
 					<xsd:simpleType>
@@ -108,6 +160,10 @@
 						</xsd:restriction>
 					</xsd:simpleType>
 				</xsd:element>
+				<xsd:element name="SellerWarrantyDescription" type="SuperLongStringNotNull" minOccurs="0"/>
+				<xsd:element name="SizeMap" type="StringNotNull" minOccurs="0"/>
+				<xsd:element ref="Battery" minOccurs="0"/>
+				<xsd:element name="BrandRegionOfOrigin" type="StringNotNull" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>

@@ -14,6 +14,7 @@
 	<xsd:element name="Office">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element name="Rebate" type="RebateType" minOccurs="0" maxOccurs="2"/>
 				<xsd:element name="ProductType">
 					<xsd:complexType>
 						<xsd:choice>
@@ -25,7 +26,39 @@
 						</xsd:choice>
 					</xsd:complexType>
 				</xsd:element>
+				<xsd:element ref="Battery" minOccurs="0"/>
+				<xsd:element name="BatteryAverageLife" type="PositiveNonZeroDimension" minOccurs="0"/>
+				<xsd:element name="BatteryAverageLifeStandby" type="PositiveNonZeroDimension"
+					minOccurs="0"/>
+				<xsd:element name="BatteryChargeTime" type="PositiveNonZeroDimension" minOccurs="0"/>
+				<xsd:element name="CountryOfOrigin" type="CountryOfOriginType" minOccurs="0"/>
+				<xsd:element name="IsAdultProduct" type="xsd:boolean" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryEnergyContent" type="PositiveInteger" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryPackaging" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="batteries_contained_in_equipment"/>
+							<xsd:enumeration value="batteries_only"/>
+							<xsd:enumeration value="batteries_packed_with_equipment"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="LithiumBatteryVoltage" type="PositiveInteger" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryWeight" type="PositiveInteger" minOccurs="0"/>
+				<xsd:element name="MfrWarrantyDescriptionLabor" type="SuperLongStringNotNull"
+					minOccurs="0"/>
+				<xsd:element name="MfrWarrantyDescriptionParts" type="SuperLongStringNotNull"
+					minOccurs="0"/>
+				<xsd:element name="ManufacturerWarrantyType" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="NumberOfLithiumIonCells" type="PositiveInteger" minOccurs="0"/>
+				<xsd:element name="NumberOfLithiumMetalCells" type="PositiveInteger" minOccurs="0"/>
+				<xsd:element name="PowerSource" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="RegionOfOrigin" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="SellerWarrantyDescription" type="SuperLongStringNotNull"
+					minOccurs="0"/>
 				<xsd:element name="Size" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="SizeMap" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="Warnings" type="LongStringNotNull" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -53,9 +86,9 @@
 									<xsd:restriction base="xsd:string">
 										<xsd:enumeration value="Color"/>
 										<xsd:enumeration value="PaperSize"/>
-										<xsd:enumeration value="Color-PaperSize"/>
 										<xsd:enumeration value="MaximumExpandableSize"/>
 										<xsd:enumeration value="LineSize"/>
+										<xsd:enumeration value="Size"/>
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
@@ -70,7 +103,8 @@
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1" minOccurs="0"/>
+				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1"
+					minOccurs="0"/>
 				<xsd:element name="NumberOfItems" type="xsd:positiveInteger" minOccurs="0"/>
 				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
@@ -79,7 +113,8 @@
 					<xsd:complexType>
 						<xsd:simpleContent>
 							<xsd:extension base="xsd:positiveInteger">
-								<xsd:attribute name="unitOfMeasure" type="StringNotNull" use="required"/>
+								<xsd:attribute name="unitOfMeasure" type="StringNotNull"
+									use="required"/>
 							</xsd:extension>
 						</xsd:simpleContent>
 					</xsd:complexType>
@@ -111,10 +146,11 @@
 				<xsd:element name="CoatingDescription" type="TwoFiftyStringNotNull" minOccurs="0"/>
 				<xsd:element name="PaperCornerType" type="String" minOccurs="0"/>
 				<xsd:element name="PaperFinish" type="StringNotNull" minOccurs="0"/>
-				<xsd:element name="PaperSize" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="PaperSize" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="BrightnessRating" type="IntegerPercentageType" minOccurs="0"/>
 				<xsd:element name="MediaStorageCapacity" type="String" minOccurs="0"/>
 				<xsd:element name="SpecialFeatures" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="FabricType" type="StringNotNull" minOccurs="0" maxOccurs="2"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -142,9 +178,9 @@
 									<xsd:restriction base="xsd:string">
 										<xsd:enumeration value="Color"/>
 										<xsd:enumeration value="PaperSize"/>
-										<xsd:enumeration value="Color-PaperSize"/>
 										<xsd:enumeration value="MaximumExpandableSize"/>
 										<xsd:enumeration value="LineSize"/>
+										<xsd:enumeration value="Size"/>
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
@@ -159,7 +195,8 @@
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1" minOccurs="0"/>
+				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1"
+					minOccurs="0"/>
 				<xsd:element name="NumberOfItems" type="xsd:positiveInteger" minOccurs="0"/>
 				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
@@ -168,7 +205,8 @@
 					<xsd:complexType>
 						<xsd:simpleContent>
 							<xsd:extension base="xsd:positiveInteger">
-								<xsd:attribute name="unitOfMeasure" type="StringNotNull" use="required"/>
+								<xsd:attribute name="unitOfMeasure" type="StringNotNull"
+									use="required"/>
 							</xsd:extension>
 						</xsd:simpleContent>
 					</xsd:complexType>
@@ -198,10 +236,11 @@
 				<xsd:element name="CoatingDescription" type="TwoFiftyStringNotNull" minOccurs="0"/>
 				<xsd:element name="PaperCornerType" type="String" minOccurs="0"/>
 				<xsd:element name="PaperFinish" type="StringNotNull" minOccurs="0"/>
-				<xsd:element name="PaperSize" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="PaperSize" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="BrightnessRating" type="IntegerPercentageType" minOccurs="0"/>
 				<xsd:element name="MediaStorageCapacity" type="String" minOccurs="0"/>
 				<xsd:element name="SpecialFeatures" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="RulingType" type="String" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -229,9 +268,9 @@
 									<xsd:restriction base="xsd:string">
 										<xsd:enumeration value="Color"/>
 										<xsd:enumeration value="PaperSize"/>
-										<xsd:enumeration value="Color-PaperSize"/>
 										<xsd:enumeration value="MaximumExpandableSize"/>
 										<xsd:enumeration value="LineSize"/>
+										<xsd:enumeration value="Size"/>
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
@@ -246,7 +285,8 @@
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1" minOccurs="0"/>
+				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1"
+					minOccurs="0"/>
 				<xsd:element name="NumberOfItems" type="xsd:positiveInteger" minOccurs="0"/>
 				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
@@ -255,7 +295,8 @@
 					<xsd:complexType>
 						<xsd:simpleContent>
 							<xsd:extension base="xsd:positiveInteger">
-								<xsd:attribute name="unitOfMeasure" type="StringNotNull" use="required"/>
+								<xsd:attribute name="unitOfMeasure" type="StringNotNull"
+									use="required"/>
 							</xsd:extension>
 						</xsd:simpleContent>
 					</xsd:complexType>
@@ -286,10 +327,11 @@
 				<xsd:element name="CoatingDescription" type="TwoFiftyStringNotNull" minOccurs="0"/>
 				<xsd:element name="PaperCornerType" type="String" minOccurs="0"/>
 				<xsd:element name="PaperFinish" type="StringNotNull" minOccurs="0"/>
-				<xsd:element name="PaperSize" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="PaperSize" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="BrightnessRating" type="IntegerPercentageType" minOccurs="0"/>
 				<xsd:element name="MediaStorageCapacity" type="String" minOccurs="0"/>
 				<xsd:element name="SpecialFeatures" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="RulingType" type="String" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -317,8 +359,8 @@
 									<xsd:restriction base="xsd:string">
 										<xsd:enumeration value="Color"/>
 										<xsd:enumeration value="PaperSize"/>
-										<xsd:enumeration value="Color-PaperSize"/>
 										<xsd:enumeration value="MaximumExpandableSize"/>
+										<xsd:enumeration value="Size"/>
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
@@ -333,7 +375,8 @@
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1" minOccurs="0"/>
+				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1"
+					minOccurs="0"/>
 				<xsd:element name="NumberOfItems" type="xsd:positiveInteger" minOccurs="0"/>
 				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
@@ -342,7 +385,8 @@
 					<xsd:complexType>
 						<xsd:simpleContent>
 							<xsd:extension base="xsd:positiveInteger">
-								<xsd:attribute name="unitOfMeasure" type="StringNotNull" use="required"/>
+								<xsd:attribute name="unitOfMeasure" type="StringNotNull"
+									use="required"/>
 							</xsd:extension>
 						</xsd:simpleContent>
 					</xsd:complexType>
@@ -366,9 +410,10 @@
 				<xsd:element name="CoatingDescription" type="TwoFiftyStringNotNull" minOccurs="0"/>
 				<xsd:element name="PaperCornerType" type="String" minOccurs="0"/>
 				<xsd:element name="PaperFinish" type="StringNotNull" minOccurs="0"/>
-				<xsd:element name="PaperSize" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="PaperSize" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="BrightnessRating" type="IntegerPercentageType" minOccurs="0"/>
 				<xsd:element name="SpecialFeatures" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="RulingType" type="String" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -396,6 +441,7 @@
 									<xsd:restriction base="xsd:string">
 										<xsd:enumeration value="Color"/>
 										<xsd:enumeration value="LineSize"/>
+										<xsd:enumeration value="Size"/>
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
@@ -410,7 +456,8 @@
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1" minOccurs="0"/>
+				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" default="1"
+					minOccurs="0"/>
 				<xsd:element name="NumberOfItems" type="xsd:positiveInteger" minOccurs="0"/>
 				<xsd:element name="DisplayLength" type="LengthDimension" minOccurs="0"/>
 				<xsd:element name="DisplayWeight" type="WeightDimension" minOccurs="0"/>
@@ -419,11 +466,13 @@
 					<xsd:complexType>
 						<xsd:simpleContent>
 							<xsd:extension base="xsd:positiveInteger">
-								<xsd:attribute name="unitOfMeasure" type="StringNotNull" use="required"/>
+								<xsd:attribute name="unitOfMeasure" type="StringNotNull"
+									use="required"/>
 							</xsd:extension>
 						</xsd:simpleContent>
 					</xsd:complexType>
 				</xsd:element>
+				<xsd:element name="MaterialType" type="StringNotNull" minOccurs="0" maxOccurs="2"/>
 				<xsd:element name="RecycledContentPercentage" type="PercentageType" minOccurs="0"/>
 				<xsd:element name="PreConsumerRecycledContent" type="PercentageType" minOccurs="0"/>
 				<xsd:element name="PostConsumerRecycledContent" type="PercentageType" minOccurs="0"/>
@@ -443,19 +492,6 @@
 	# Office Data Types
 	##############################################################
 	-->
-	<xsd:simpleType name="PercentageType">
-		<xsd:restriction base="xsd:decimal">
-			<xsd:fractionDigits value="2"/>
-			<xsd:minExclusive value="0"/>
-			<xsd:maxInclusive value="100"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="IntegerPercentageType">
-		<xsd:restriction base="xsd:positiveInteger">
-			<xsd:minInclusive value="1"/>
-			<xsd:maxInclusive value="100"/>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<xsd:simpleType name="BallpointPenTypes">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="Retractable"/>
