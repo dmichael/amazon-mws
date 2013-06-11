@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<!-- "$Revision: #7 $" -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!--
+    $Date: 2006/05/23 $
+
+    AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
+    confidential and proprietary information of Amazon.com and may not be reproduced, 
+    distributed or used, in whole or in part, for any purpose other than as necessary 
+    to list products for sale on the www.amazon.com web site pursuant to an agreement 
+    with Amazon.com.
+    -->
+	<xsd:include schemaLocation="amzn-base.xsd"/>
+	<xsd:element name="OrderReport">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="AmazonOrderID"/>
+				<xsd:element name="AmazonSessionID">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:pattern value="\d{3}-\d{7}-\d{7}"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="OrderDate" type="xsd:dateTime"/>
+				<xsd:element name="OrderPostedDate" type="xsd:dateTime"/>
+				<xsd:element name="CustomerOrderInfo" minOccurs="0" maxOccurs="10">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Type" type="StringNotNull"/>
+							<xsd:element name="Value" type="StringNotNull"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="BillingData">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="BuyerEmailAddress">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:normalizedString">
+										<xsd:pattern value="[^@]+@[^@\.]+(\.[^@\.]+)+"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="BuyerName" type="String"/>
+							<xsd:element name="BuyerPhoneNumber" type="String"/>
+							<xsd:element name="CreditCard" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="Issuer">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:enumeration value="Visa"/>
+													<xsd:enumeration value="MasterCard"/>
+													<xsd:enumeration value="AmericanExpress"/>
+													<xsd:enumeration value="Discover"/>
+													<xsd:enumeration value="DinersClub"/>
+													<xsd:enumeration value="JCB"/>
+													<xsd:enumeration value="PrivateLabel"/>
+													<xsd:enumeration value="BankDebit"/>
+													<xsd:enumeration value="CarteBlanche"/>
+													<xsd:enumeration value="CarteBancaire"/>
+													<xsd:enumeration value="PaymentByInvoice"/>
+													<xsd:enumeration value="Laser"/>
+													<xsd:enumeration value="Switch"/>
+													<xsd:enumeration value="SVS"/>
+													<xsd:enumeration value="BordersECG"/>
+													<xsd:enumeration value="Other"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element name="Tail">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="\d{4}"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element name="ExpirationDate" type="xsd:gYearMonth"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element ref="Address" minOccurs="0"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="FulfillmentData">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="FulfillmentMethod"/>
+							<xsd:element ref="FulfillmentServiceLevel" minOccurs="0"/>
+							<xsd:element ref="FulfillmentCenterID" minOccurs="0"/>
+							<xsd:element ref="Address" minOccurs="0"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="Item" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="AmazonOrderItemCode"/>
+							<xsd:element ref="SKU"/>
+							<xsd:element name="Title" type="LongString"/>
+							<xsd:element name="CustomizationInfo" type="CustomizationInfoType" minOccurs="0" maxOccurs="unbounded"/>
+							<xsd:element name="Quantity" type="xsd:positiveInteger"/>
+							<xsd:element ref="ProductTaxCode"/>
+							<xsd:element name="DeliveryStartDate" type="xsd:dateTime" minOccurs="0"/>
+							<xsd:element name="DeliveryEndDate" type="xsd:dateTime" minOccurs="0"/>
+							<xsd:element name="DeliveryTimeZone" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="DeliveryInstructions" type="LongStringNotNull" minOccurs="0"/>
+							<xsd:element name="ItemPrice" type="BuyerPrice"/>
+							<xsd:element name="ItemFees" type="AmazonFees"/>
+							<xsd:element name="ItemTaxData" type="TaxData" minOccurs="0"/>
+							<xsd:element name="ShippingTaxData" type="TaxData" minOccurs="0"/>
+							<xsd:element name="GiftWrapTaxData" type="TaxData" minOccurs="0"/>
+							<xsd:element name="Promotion" type="PromotionDataType" minOccurs="0" maxOccurs="unbounded"/>
+							<xsd:element name="GiftWrapLevel" type="StringNotNull" minOccurs="0"/>
+							<xsd:element name="GiftMessageText" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="500"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!--
+    ##################################################
+    # Tax data type
+    ##################################################
+    -->
+	<xsd:complexType name="TaxData">
+		<xsd:sequence>
+			<xsd:element name="TaxJurisdictions">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="TaxLocationCode" type="String"/>
+						<xsd:element name="City" type="String"/>
+						<xsd:element name="County" type="String"/>
+						<xsd:element name="State" type="String"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="TaxableAmounts" type="TaxDataSubtype"/>
+			<xsd:element name="NonTaxableAmounts" type="TaxDataSubtype"/>
+			<xsd:element name="ZeroRatedAmounts" type="TaxDataSubtype"/>
+			<xsd:element name="TaxCollectedAmounts" type="TaxDataSubtype"/>
+			<xsd:element name="TaxRates">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="District" type="TaxRate"/>
+						<xsd:element name="City" type="TaxRate"/>
+						<xsd:element name="County" type="TaxRate"/>
+						<xsd:element name="State" type="TaxRate"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--
+    ##################################################
+    # Tax data sub type
+    ##################################################
+    -->
+	<xsd:complexType name="TaxDataSubtype">
+		<xsd:sequence>
+			<xsd:element name="District" type="CurrencyAmount"/>
+			<xsd:element name="City" type="CurrencyAmount"/>
+			<xsd:element name="County" type="CurrencyAmount"/>
+			<xsd:element name="State" type="CurrencyAmount"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--
+    ##################################################
+    # Tax rate type
+    ##################################################
+    -->
+	<xsd:simpleType name="TaxRate">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="5"/>
+			<xsd:fractionDigits value="4" fixed="true"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

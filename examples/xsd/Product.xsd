@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- edited with XMLSpy v2010 rel. 2 (http://www.altova.com) by sunil sachdev (amazon.com) -->
 <!-- Revision="$Revision: #12 $" -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<!--
@@ -11,17 +12,20 @@
     with Amazon.com.
     -->
 	<xsd:include schemaLocation="amzn-base.xsd"/>
+	<xsd:include schemaLocation="ClothingAccessories.xsd"/>
 	<xsd:include schemaLocation="ProductClothing.xsd"/>
 	<xsd:include schemaLocation="Miscellaneous.xsd"/>
 	<xsd:include schemaLocation="CameraPhoto.xsd"/>
 	<xsd:include schemaLocation="Home.xsd"/>
 	<xsd:include schemaLocation="Sports.xsd"/>
+	<xsd:include schemaLocation="HomeImprovement.xsd"/>
 	<xsd:include schemaLocation="Tools.xsd"/>
 	<xsd:include schemaLocation="FoodAndBeverages.xsd"/>
 	<xsd:include schemaLocation="Gourmet.xsd"/>
 	<xsd:include schemaLocation="Jewelry.xsd"/>
 	<xsd:include schemaLocation="Health.xsd"/>
 	<xsd:include schemaLocation="CE.xsd"/>
+	<xsd:include schemaLocation="Computers.xsd"/>
 	<xsd:include schemaLocation="SWVG.xsd"/>
 	<xsd:include schemaLocation="Wireless.xsd"/>
 	<xsd:include schemaLocation="Beauty.xsd"/>
@@ -31,6 +35,10 @@
 	<xsd:include schemaLocation="PetSupplies.xsd"/>
 	<xsd:include schemaLocation="ToysBaby.xsd"/>
 	<xsd:include schemaLocation="TiresAndWheels.xsd"/>
+	<xsd:include schemaLocation="Music.xsd"/>
+	<xsd:include schemaLocation="Video.xsd"/>
+	<xsd:include schemaLocation="Lighting.xsd"/>
+	<xsd:include schemaLocation="LargeAppliances.xsd"/>
 	<!--
     Please read the corresponding documentation that contains the recommended values for UsedFor, ItemType,
     OtherItemAttributes, TargetAudience, and SubjectContent.
@@ -44,6 +52,24 @@
 				<xsd:element name="LaunchDate" type="xsd:dateTime" minOccurs="0"/>
 				<xsd:element name="DiscontinueDate" type="xsd:dateTime" minOccurs="0"/>
 				<xsd:element name="ReleaseDate" type="xsd:dateTime" minOccurs="0"/>
+				<xsd:element name="ExternalProductUrl" type="xsd:anyURI" minOccurs="0"/>
+				<xsd:element name="OffAmazonChannel" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="advertise"/>
+							<xsd:enumeration value="exclude"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="OnAmazonChannel" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="sell"/>
+							<xsd:enumeration value="advertise"/>
+							<xsd:enumeration value="exclude"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
 				<xsd:element name="Condition" type="ConditionInfo" minOccurs="0"/>
 				<xsd:element name="Rebate" type="RebateType" minOccurs="0" maxOccurs="2"/>
 				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" minOccurs="0">
@@ -84,8 +110,8 @@
 							<xsd:element name="BulletPoint" type="LongStringNotNull" minOccurs="0" maxOccurs="5"/>
 							<xsd:element name="ItemDimensions" type="Dimensions" minOccurs="0"/>
 							<xsd:element name="PackageDimensions" type="SpatialDimensions" minOccurs="0"/>
-							<xsd:element name="PackageWeight" type="PositiveWeightDimension" minOccurs="0"/>
-							<xsd:element name="ShippingWeight" type="PositiveWeightDimension" minOccurs="0"/>
+							<xsd:element name="PackageWeight" type="PositiveNonZeroWeightDimension" minOccurs="0"/>
+							<xsd:element name="ShippingWeight" type="PositiveNonZeroWeightDimension" minOccurs="0"/>
 							<xsd:element name="MerchantCatalogNumber" type="FortyStringNotNull" minOccurs="0"/>
 							<xsd:element name="MSRP" type="CurrencyAmount" minOccurs="0"/>
 							<xsd:element name="MaxOrderQuantity" type="xsd:positiveInteger" minOccurs="0"/>
@@ -121,7 +147,7 @@
 							<xsd:element name="UsedFor" type="StringNotNull" minOccurs="0" maxOccurs="5"/>
 							<xsd:element name="ItemType" type="LongStringNotNull" minOccurs="0"/>
 							<xsd:element name="OtherItemAttributes" type="LongStringNotNull" minOccurs="0" maxOccurs="5"/>
-							<xsd:element name="TargetAudience" type="StringNotNull" minOccurs="0" maxOccurs="3"/>
+							<xsd:element name="TargetAudience" type="StringNotNull" minOccurs="0" maxOccurs="4"/>
 							<xsd:element name="SubjectContent" type="StringNotNull" minOccurs="0" maxOccurs="5"/>
 							<xsd:element name="IsGiftWrapAvailable" type="xsd:boolean" minOccurs="0"/>
 							<xsd:element name="IsGiftMessageAvailable" type="xsd:boolean" minOccurs="0"/>
@@ -136,6 +162,68 @@
 								<xsd:simpleType>
 									<xsd:restriction base="xsd:normalizedString">
 										<xsd:length value="6" fixed="true"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="TSDAgeWarning" minOccurs="0" maxOccurs="1">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="not_suitable_under_36_months"/>
+										<xsd:enumeration value="not_suitable_under_3_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_4_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_5_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_6_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_7_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_8_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_9_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_10_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_11_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_12_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_13_years_supervision"/>
+										<xsd:enumeration value="not_suitable_under_14_years_supervision"/>
+										<xsd:enumeration value="no_warning_applicable"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="TSDWarning" minOccurs="0" maxOccurs="8">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="only_domestic_use"/>
+										<xsd:enumeration value="adult_supervision_required"/>
+										<xsd:enumeration value="protective_equipment_required"/>
+										<xsd:enumeration value="water_adult_supervision_required"/>
+										<xsd:enumeration value="toy_inside"/>
+										<xsd:enumeration value="no_protective_equipment"/>
+										<xsd:enumeration value="risk_of_entanglement"/>
+										<xsd:enumeration value="fragrances_allergy_risk"/>
+										<xsd:enumeration value="no_warning_applicable"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="TSDLanguage" minOccurs="0" maxOccurs="21">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="English"/>
+										<xsd:enumeration value="French"/>
+										<xsd:enumeration value="German"/>
+										<xsd:enumeration value="Italian"/>
+										<xsd:enumeration value="Spanish"/>
+										<xsd:enumeration value="Dutch"/>
+										<xsd:enumeration value="Polish"/>
+										<xsd:enumeration value="Bulgarian"/>
+										<xsd:enumeration value="Czech"/>
+										<xsd:enumeration value="Danish"/>
+										<xsd:enumeration value="Estonian"/>
+										<xsd:enumeration value="Finnish"/>
+										<xsd:enumeration value="Greek"/>
+										<xsd:enumeration value="Hungarian"/>
+										<xsd:enumeration value="Latvian"/>
+										<xsd:enumeration value="Lithuanian"/>
+										<xsd:enumeration value="Portuguese"/>
+										<xsd:enumeration value="Romanian"/>
+										<xsd:enumeration value="Slovak"/>
+										<xsd:enumeration value="Slovene"/>
+										<xsd:enumeration value="Swedish"/>
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
@@ -161,17 +249,20 @@
 				<xsd:element name="ProductData" minOccurs="0">
 					<xsd:complexType>
 						<xsd:choice>
+							<xsd:element ref="ClothingAccessories"/>
 							<xsd:element ref="Clothing"/>
 							<xsd:element ref="Miscellaneous"/>
 							<xsd:element ref="CameraPhoto"/>
 							<xsd:element ref="Home"/>
 							<xsd:element ref="Sports"/>
+							<xsd:element ref="HomeImprovement"/>
 							<xsd:element ref="Tools"/>
 							<xsd:element ref="FoodAndBeverages"/>
 							<xsd:element ref="Gourmet"/>
 							<xsd:element ref="Jewelry"/>
 							<xsd:element ref="Health"/>
 							<xsd:element ref="CE"/>
+							<xsd:element ref="Computers"/>
 							<xsd:element ref="SoftwareVideoGames"/>
 							<xsd:element ref="Wireless"/>
 							<xsd:element ref="Beauty"/>
@@ -181,6 +272,10 @@
 							<xsd:element ref="PetSupplies"/>
 							<xsd:element ref="ToysBaby"/>
 							<xsd:element ref="TiresAndWheels"/>
+							<xsd:element ref="Music"/>
+							<xsd:element ref="Video"/>
+							<xsd:element ref="Lighting"/>
+							<xsd:element ref="LargeAppliances"/>
 						</xsd:choice>
 					</xsd:complexType>
 				</xsd:element>

@@ -3,7 +3,7 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<!--
 
-	$Date: 2005/04/01 $
+	$Date: 2012/04/01 $
 
 	AMAZON.COM CONFIDENTIAL.  This document and the information contained in it are
 	confidential and proprietary information of Amazon.com and may not be reproduced, 
@@ -16,6 +16,7 @@
 	<xsd:element name="Wireless">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element name="Rebate" type="RebateType" minOccurs="0" maxOccurs="2"/>
 				<xsd:element name="ProductType">
 					<xsd:complexType>
 						<xsd:choice>
@@ -24,6 +25,22 @@
 						</xsd:choice>
 					</xsd:complexType>
 				</xsd:element>
+				<xsd:element name="BatteryTypeLithiumIon" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="BatteryTypeLithiumMetal" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryEnergyContent" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryPackaging" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="batteries_contained_in_equipment"/>
+							<xsd:enumeration value="batteries_only"/>
+							<xsd:enumeration value="batteries_packed_with_equipment"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="LithiumBatteryVoltage" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="LithiumBatteryWeight" type="xsd:decimal" minOccurs="0"/>
+				<xsd:element name="NumberOfLithiumIonCells" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="NumberOfLithiumMetalCells" type="xsd:positiveInteger" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -35,9 +52,30 @@
 	<xsd:element name="WirelessAccessories">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element name="VariationData" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Parentage">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="parent"/>
+										<xsd:enumeration value="child"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="VariationTheme" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="Color"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
 				<xsd:element name="Color" type="StringNotNull" minOccurs="0"/>
 				<xsd:element ref="ColorMap" minOccurs="0"/>
-				<xsd:element name="AdditionalFeatures" type="LongStringNotNull" minOccurs="0"/>
+				<xsd:element name="AdditionalFeatures" type="LongStringNotNull" minOccurs="0" maxOccurs="3"/>
 				<xsd:element name="TalkTime" type="TimeDimension" minOccurs="0"/>
 				<xsd:element name="StandbyTime" type="TimeDimension" minOccurs="0"/>
 				<xsd:element name="ChargingTime" type="TimeDimension" minOccurs="0"/>
@@ -53,6 +91,8 @@
 				<xsd:element name="ManufacturerName" type="StringNotNull" minOccurs="0"/>
 				<xsd:element name="Keywords" type="StringNotNull" minOccurs="0" maxOccurs="5"/>
 				<xsd:element name="ItemPackageQuantity" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="HeadsetType" type="HeadsetTypeValue" minOccurs="0"/>
+				<xsd:element name="HeadsetStyle" type="HeadsetStyleValue" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -68,10 +108,21 @@
 				<xsd:element name="ManufacturerName" type="StringNotNull" minOccurs="0"/>
 				<xsd:element name="AdditionalFeatures" type="LongStringNotNull" minOccurs="0"/>
 				<xsd:element name="Keywords" type="StringNotNull" minOccurs="0" maxOccurs="5"/>
-                                <xsd:element name="ApplicationVersion" type="StringNotNull" minOccurs="0"/>
+				<xsd:element name="ApplicationVersion" type="StringNotNull" minOccurs="0"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:simpleType name="HeadsetTypeValue">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="one-ear"/>
+			<xsd:enumeration value="two-ear"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HeadsetStyleValue">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="over-the-ear"/>
+			<xsd:enumeration value="behind-the-ear"/>
+			<xsd:enumeration value="in-the-ear"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
 </xsd:schema>
-
-

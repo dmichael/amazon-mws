@@ -7,12 +7,11 @@ module Amazon
       # The SubmitFeed operation uploads a file for processing together with
       # the necessary metadata to process the file.
 
-      # Amazon MWS limits calls to 1,000 total calls per hour per seller
-      # account. For best performance, you should limit your calls to
-      # SubmitFeed to no more than three feeds per hour per seller account,
-      # although you can successfully call SubmitFeed up to 30 times per
-      # hour. Feed size is limited to 2,147,483,647 bytes (2^32 -1) per
-      # feed.
+      # Amazon MWS sets a request quota at a maximum of 15 requests per seller
+      # account. These restore at one request per minute. For best performance, 
+      # you should limit your calls to SubmitFeed. It is recomennded that you 
+      # submit fewer, but larger feeds. Feed size is limited to 2,147,483,647 
+      # bytes (2^32 -1) per feed.
       
       def submit_feed(feed_type, message_type, message = {})
         message_type= message_type.to_s.camelize
