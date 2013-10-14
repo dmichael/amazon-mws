@@ -253,11 +253,11 @@ module Amazon
         response = 
         get("/", {
           "Action" => "ManageReportSchedule", 
-          "Schedule" => schedule,
-          "ReportType" => report_type
+          "Schedule" => SCHEDULE[schedule],
+          "ReportType" => REPORT_TYPES[report_type]
         })
         
-        ManageReportScheduleResponse.format(reponse)
+        ManageReportScheduleResponse.format(response)
       end
       
       # GetReportScheduleList
