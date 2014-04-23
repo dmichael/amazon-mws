@@ -9,6 +9,8 @@ module Amazon
       def self.debug=(bool); @@debug = bool end
       
       def initialize(options ={})
+        @merchant_id = options['merchant_id']
+        raise "Must supply merchant_id" unless @merchant_id
         @connection = Amazon::MWS::Connection.connect(options)
       end
       

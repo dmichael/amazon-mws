@@ -42,11 +42,12 @@ class Amazon::MWS::Connection
     
     def add_content_type
       # nothing happening yet
+      @request.content_type = "text/html; charset=iso-8859-1"
       return self
     end
     
     def add_content_md5(body = "")
-      @request['Content-MD5'] = Base64.encode64(create_md5(body))
+      @request['Content-MD5'] = Base64.encode64(create_md5(body)).chomp
       return self # chainable
     end  
     
@@ -61,7 +62,7 @@ class Amazon::MWS::Connection
         digest = md5.update(body)
       end
       
-      return digest.hexdigest
+      return digest.digest
     end
   end
 end

@@ -17,7 +17,11 @@ module Amazon
           :orders                     => '_GET_ORDERS_DATA_', #API Function: ManageReportSchedule
           :flat_file_order_report     => '_GET_FLAT_FILE_ORDER_REPORT_DATA_', #API Function: ManageReportSchedule
           :flat_file_orders           => '_GET_FLAT_FILE_ORDERS_DATA_',
-          :converged_flat_file_order_report => '_GET_CONVERGED_FLAT_FILE_ORDER_REPORT_DATA_'
+          :flat_file_fba_orders       => '_GET_AMAZON_FULFILLED_SHIPMENTS_DATA_',
+          :converged_flat_file_order_report => '_GET_CONVERGED_FLAT_FILE_ORDER_REPORT_DATA_',
+          :payment_settlement_report => '_GET_FLAT_FILE_PAYMENT_SETTLEMENT_DATA_',
+          :alternative_payment_settlement_report => '_GET_ALT_FLAT_FILE_PAYMENT_SETTLEMENT_DATA_',
+          :payment_settlement_xml_report => '_GET_PAYMENT_SETTLEMENT_DATA_'
         }
       
         SCHEDULE = {

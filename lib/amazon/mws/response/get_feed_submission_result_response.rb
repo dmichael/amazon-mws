@@ -23,7 +23,7 @@ module Amazon
         xml_reader :result_code
         xml_reader :message_code, :from => "ResultMessageCode", :as => Integer
         xml_reader :description, :from => "ResultDescription"
-        xml_reader :sku, :from => "SKU", :in => "AdditionalInfo", :as => Integer
+        xml_reader :sku, :from => "SKU", :in => "AdditionalInfo"
       end
       
       class Message < Response
@@ -33,7 +33,7 @@ module Amazon
         xml_reader :document_transaction_id, :from => "DocumentTransactionID", :in => "ProcessingReport", :as => Integer
         xml_reader :status_code, :in => "ProcessingReport"
         xml_reader :processing_summary, :as => ProcessingSummary, :in => "ProcessingReport"
-        xml_reader :result, :as => Result, :in => "ProcessingReport"
+        xml_reader :results, :as => [Result], :in => "ProcessingReport"
       end
     end
     

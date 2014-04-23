@@ -13,14 +13,27 @@ module Amazon
       # submit fewer, but larger feeds. Feed size is limited to 2,147,483,647 
       # bytes (2^32 -1) per feed.
       
+      def submit_flat_file_feed(records, purge_flag = false)
+        header = "sku\tproduct-id\tproduct-id-type\tprice\titem-condition\tquantity\tadd-delete\twill-ship-internationally\texpedited-shipping\titem-note\tfulfillment-center-id\tleadtime-to-ship"
+        puts ([header] + records).join("\r")
+        query_params = {
+          "Action"          => "SubmitFeed", 
+          "FeedType"        => "_POST_FLAT_FILE_INVLOADER_DATA_"}
+        query_params['PurgeAndReplace'] = 'true' if purge_flag
+        
+        response = post("/", query_params, ([header] + records).join("\r"))
+        result = SubmitFeedResponse.format(response)
+      end
+      
       def submit_feed(feed_type, message_type, message = {})
         message_type= message_type.to_s.camelize
         raise InvalidMessageType if !MESSAGE_TYPES.include?(message_type)
   
-        body = Amazon::MWS::FeedBuilder.new(message_type, message)
+        raise "Missing merchant_id" unless @merchant_id
+        body = Amazon::MWS::FeedBuilder.new(message_type, message, {:merchant_id => @merchant_id}).render
         
-        response = 
-        post("/", {
+        response =
+          post("/", {
           "Action"   => "SubmitFeed", 
           "FeedType" => FEED_TYPES[feed_type]
         }, body)
@@ -202,7 +215,7 @@ module Amazon
       # The identifier of the feed submission to get results for. Obtained
       # by a call to GetFeedSubmissionList.
       
-      def get_feed_submission_result(feed_submission_id)
+      def get_feed_submission_result(feed_submission_id, params = {})
         response = 
         get("/", {
           "Action"           => "GetFeedSubmissionResult", 
