@@ -12,8 +12,10 @@ class Amazon::MWS::Authentication
         'Version'          => Amazon::MWS::Authentication::VERSION
       }
       
-      # Add any params that are passed in via uri before calculating the signature
+      # Add any params that are passed in via uri before calculating
+      # the signature
       query_params = query_params.merge(params[:query_params] || {})
+
       # Calculate the signature
       query_params['Signature'] = Signature.new(query_params, params)
       
